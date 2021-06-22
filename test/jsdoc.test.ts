@@ -13,40 +13,47 @@ function tsdoc(strs: TemplateStringsArray) {
 	return strs.join('').trimEnd();
 }
 
-Deno.test('Description', () => {
+Deno.test('Description, simple', () =>
 	assertEquals(
 		jsdoc`
 			/**
-			 * Test
+			 * Test 1
 			 */
 		`,
 		tsdoc`
 			/**
-			 * Test
+			 * Test 1
 			 */
 		`
-	);
-	assertEquals(
-		jsdoc`
-			/**
-			 * This description
-			 * has a multi-line
-			 * paragraph
-			 */
-		`,
-		tsdoc`
-			/**
-			 * This description has a multi-line paragraph
-			 */
-		`
-	);
-});
+	)
+);
 
-Deno.test('Parameter', () => {
-	// Just a single parameter without description
-	//   The TSDoc playground will complain if a param name is not followed by a hyphen.
-	//   Mind you that this hyphen is, in the absence of a description, not followed by a space or
-	//   any other character.
+Deno.test('Description, long and line-wrapping', () =>
+	assertEquals(
+		jsdoc`
+			/**
+			 * This description with some really long lines. This description with some really long lines. This description with some really long lines. This description with some really
+			 * long lines. This description
+			 * with some really weird wrapping.
+			 */
+		`,
+		// @TODO
+		//   Wrap the output description
+		tsdoc`
+			/**
+			 * This description with some really long lines. This description with some really long lines. This
+			 * description with some really long lines. This description with some really long lines. This description
+			 * with some really weird wrapping.
+			 */
+		`
+	)
+);
+
+// Just a single parameter without description
+//   The TSDoc playground will complain if a param name is not followed by a hyphen.
+//   Mind you that this hyphen is, in the absence of a description, not followed by a space or
+//   any other character.
+Deno.test('Parameter, without description', () =>
 	assertEquals(
 		jsdoc`
 			/**
@@ -58,9 +65,11 @@ Deno.test('Parameter', () => {
 			 * @param nerf -
 			 */
 		`
-	);
+	)
+);
 
-	// Just a single parameter with description
+// Just a single parameter with description
+Deno.test('Parameter, simple description', () =>
 	assertEquals(
 		jsdoc`
 			/**
@@ -72,9 +81,11 @@ Deno.test('Parameter', () => {
 			 * @param nerf - Derp
 			 */
 		`
-	);
+	)
+);
 
-	// Several parameters, the names have different lengths and become nicely aligned in output
+// Several parameters, the names have different lengths and become nicely aligned in output
+Deno.test('Parameter, alignment on name length', () =>
 	assertEquals(
 		jsdoc`
 			/**
@@ -88,8 +99,10 @@ Deno.test('Parameter', () => {
 			 * @param nerfOfDifferentLength - Derp
 			 */
 		`
-	);
-	// Optional parameters. Optionality is left out, because this lives in TS
+	)
+);
+// Optional parameters. Optionality is left out, because this lives in TS
+Deno.test('Parameter, optionality is ignored', () =>
 	assertEquals(
 		jsdoc`
 			/**
@@ -101,9 +114,11 @@ Deno.test('Parameter', () => {
 			 * @param nerf - Derp
 			 */
 		`
-	);
-	// Parameter defaults. Also left out, because (according to some) this should be part of TS
-	//   https://github.com/microsoft/tsdoc/issues/151
+	)
+);
+// Parameter defaults. Also left out, because (according to some) this should be part of TS
+//   https://github.com/microsoft/tsdoc/issues/151
+Deno.test('Parameter, default value is ignored', () =>
 	assertEquals(
 		jsdoc`
 			/**
@@ -115,5 +130,5 @@ Deno.test('Parameter', () => {
 			 * @param nerf - Derp
 			 */
 		`
-	);
-});
+	)
+);

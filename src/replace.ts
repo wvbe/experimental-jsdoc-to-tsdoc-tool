@@ -1,5 +1,5 @@
 import { parse, Block } from 'https://esm.sh/comment-parser';
-import { getNicelyFormattedParamsFromTags } from './formatting.ts';
+import { getNicelyFormattedParamsFromTags, getNicelyWrappedDescription } from './formatting.ts';
 
 const MAX_LINE_WIDTH = 120;
 const TAB_WIDTH = 4;
@@ -11,18 +11,22 @@ export function getJsdocAstsForFileContents(fileContents: string): Block[] {
 }
 
 export function getTsdocStringForJsdocAst(ast: Block): string {
-	const indentation = '\n' + ast.source[0].tokens.start;
-	const maxContentWidth = indentation
-		.split('')
-		.reduce((width, char) => width + (char === '\t' ? TAB_WIDTH : char.length), 0);
-	let comment = indentation + '/**';
+	const tab = ast.source[0].tokens.start;
+	const eol = '\n' + tab;
+	const maxContentWidth =
+		MAX_LINE_WIDTH -
+		eol.split('').reduce((width, char) => width + (char === '\t' ? TAB_WIDTH : char.length), 0);
+
+	let comment = eol + '/**';
 
 	if (ast.description) {
-		comment += indentation + ' * ' + ast.description;
+		comment +=
+			'\n' + getNicelyWrappedDescription(ast.description, maxContentWidth, tab + ' * ');
 	}
+
 	comment += [...getNicelyFormattedParamsFromTags(ast.tags)]
-		.map(line => indentation + ' * ' + line)
+		.map(line => eol + ' * ' + line)
 		.join('');
-	comment += indentation + ' */';
+	comment += eol + ' */';
 	return comment;
 }
