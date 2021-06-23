@@ -43,6 +43,13 @@ export function getNicelyFormattedReturnFromTags(specs: Spec[]) {
 	)
 }
 
+export function getNicelyFormattedSeeFromTags(specs: Spec[]) {
+	const seeTags = specs.filter(spec => spec.tag === 'see');
+	return seeTags.map((see) =>
+		`@see ${see.name} ${see.description}`.trim()
+	);
+}
+
 export function getNicelyWrappedDescription(description: string, width: number, linePrefix = '') {
 	return wrap(description, { width: width, indent: linePrefix })
 		.split('\n')

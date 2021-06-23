@@ -4,7 +4,8 @@ import {
 	getNicelyFormattedAbstractFromTags,
 	getNicelyFormattedReturnFromTags,
 	getNicelyFormattedParamsFromTags,
-	getNicelyFormattedFontosdkFromTags
+	getNicelyFormattedFontosdkFromTags,
+	getNicelyFormattedSeeFromTags
 } from './formatting.ts';
 
 const MAX_LINE_WIDTH = 120;
@@ -34,7 +35,8 @@ export function getTsdocStringForJsdocAst(ast: Block): string {
 		...getNicelyFormattedAbstractFromTags(ast.tags),
 		...getNicelyFormattedParamsFromTags(ast.tags),
 		...getNicelyFormattedFontosdkFromTags(ast.tags),
-		...getNicelyFormattedReturnFromTags(ast.tags)
+		...getNicelyFormattedReturnFromTags(ast.tags),
+		...getNicelyFormattedSeeFromTags(ast.tags)
 	]
 		.map(line => eol + ' * ' + line)
 		.join('');

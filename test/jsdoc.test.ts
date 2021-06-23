@@ -219,3 +219,20 @@ Deno.test('Returns', () =>
 		`
 	)
 );
+
+Deno.test("See", () =>
+	assertEquals(
+		jsdoc`
+			/**
+			 * @see You need to see this.
+			 * @see And this other too.
+			 */
+		`,
+		tsdoc`
+			/**
+			 * @see You need to see this.
+			 * @see And this other too.
+			 */
+		`
+	)
+);
