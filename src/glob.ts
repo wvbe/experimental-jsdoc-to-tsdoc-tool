@@ -1,5 +1,4 @@
 import { expandGlob } from "https://deno.land/std@0.99.0/fs/mod.ts";
-import { basename, dirname } from "https://deno.land/std@0.99.0/path/mod.ts";
 const FILES_WITH_JSDOC = "**/*.{js,jsx,ts,tsx}";
 
 export async function globFilesWithJsdoc() {

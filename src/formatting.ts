@@ -1,5 +1,4 @@
 import { Spec } from "https://esm.sh/comment-parser";
-import wrap from "https://esm.sh/word-wrap";
 
 // @abstract
 export function getNicelyFormattedAbstractFromTags(specs: Spec[]) {
@@ -85,11 +84,13 @@ export function getNicelyFormattedSeeFromTags(specs: Spec[]) {
 // Descrpition
 export function getNicelyWrappedDescription(
   description: string,
-  width: number,
-  linePrefix = "",
+  specs: Spec[],
 ) {
-  return wrap(description, { width: width, indent: linePrefix })
-    .split("\n")
-    .map((line) => line.trimEnd())
-    .join("\n");
+  const concatted = specs.filter((spec) => spec.tag === "description").reduce<
+    string
+  >(
+    (desc, spec) => desc + "\n\n" + spec.name + " " + spec.description,
+    description,
+  ).trim();
+  return concatted.length ? concatted.split("\n") : [];
 }

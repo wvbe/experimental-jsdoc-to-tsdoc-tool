@@ -10,36 +10,24 @@ import {
   getNicelyWrappedDescription,
 } from "./formatting.ts";
 
-const MAX_LINE_WIDTH = 120;
-const TAB_WIDTH = 4;
 export async function getJsdocAstsForFile(filePath: string) {
   return getJsdocAstsForFileContents(await Deno.readTextFile(filePath));
 }
+
 export function getJsdocAstsForFileContents(fileContents: string): Block[] {
-  return parse(fileContents);
+  return parse(fileContents, { spacing: "preserve" });
 }
 
 export function getTsdocStringForJsdocAst(ast: Block): string {
   const tab = ast.source[0].tokens.start;
   const eol = "\n" + tab;
-  const maxContentWidth = MAX_LINE_WIDTH -
-    eol.split("").reduce(
-      (width, char) => width + (char === "\t" ? TAB_WIDTH : char.length),
-      0,
-    );
 
-  let comment = eol + "/**";
+  const description = getNicelyWrappedDescription(
+    ast.description,
+    ast.tags,
+  );
 
-  if (ast.description) {
-    comment += "\n" +
-      getNicelyWrappedDescription(
-        ast.description,
-        maxContentWidth,
-        tab + " * ",
-      );
-  }
-
-  comment += [
+  const tags = [
     ...getNicelyFormattedAbstractFromTags(ast.tags),
     ...getNicelyFormattedDeprecatedFromTags(ast.tags),
     ...getNicelyFormattedFontosdkFromTags(ast.tags),
@@ -47,9 +35,17 @@ export function getTsdocStringForJsdocAst(ast: Block): string {
     ...getNicelyFormattedParamsFromTags(ast.tags),
     ...getNicelyFormattedReturnFromTags(ast.tags),
     ...getNicelyFormattedSeeFromTags(ast.tags),
+  ];
+
+  // Wrap everything in a "/**" comment block, and separate the description from all other
+  //   tags with a newline.
+  return eol + "/**" + [
+    ...description,
+    description.length && tags.length ? "" : null,
+    ...tags,
   ]
-    .map((line) => eol + " * " + line)
-    .join("");
-  comment += eol + " */";
-  return comment;
+    .filter((line) => line !== null)
+    .map((line) => (eol + " * " + line).trimEnd())
+    .join("") +
+    eol + " */";
 }
