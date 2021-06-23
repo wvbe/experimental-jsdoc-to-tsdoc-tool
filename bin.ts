@@ -1,4 +1,4 @@
-import { getJsdocAstsForFile } from './src/replace.ts';
+import { getJsdocAstsForFile } from "./src/replace.ts";
 
 /**
  * What
