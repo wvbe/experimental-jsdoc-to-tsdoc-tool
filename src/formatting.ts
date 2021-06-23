@@ -13,6 +13,17 @@ export function getNicelyFormattedAbstractFromTags(specs: Spec[]) {
   return ["@virtual"];
 }
 
+// @deprecated
+export function getNicelyFormattedDeprecatedFromTags(specs: Spec[]) {
+  const deprecated = specs.filter((spec) => spec.tag === "deprecated");
+  if (deprecated.length > 1) {
+    throw new Error("Much confuse, more than 1 @deprecated statement");
+  }
+  return deprecated.map((deprecated) =>
+    `@deprecated ${deprecated.name} ${deprecated.description}`.trim()
+  );
+}
+
 // @fontosdk
 export function getNicelyFormattedFontosdkFromTags(specs: Spec[]) {
   const fontosdks = specs.filter((spec) => spec.tag === "fontosdk");
