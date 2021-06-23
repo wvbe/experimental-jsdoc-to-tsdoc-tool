@@ -1,6 +1,16 @@
 import { Spec } from 'https://esm.sh/comment-parser';
 import wrap from 'https://esm.sh/word-wrap';
 
+export function getNicelyFormattedAbstractFromTags(specs: Spec[]) {
+	const tags = specs.filter(spec => spec.tag === 'abstract');
+	if (!tags.length) {
+		return [];
+	}
+	if (tags.length > 1) {
+		throw new Error('Much confuse, more than 1 @abstract statement');
+	}
+	return ['@virtual']
+}
 export function getNicelyFormattedParamsFromTags(specs: Spec[]) {
 	const params = specs.filter(spec => spec.tag === 'param');
 	const maxNameLength = params.reduce((length, param) => Math.max(length, param.name.length), 0);
@@ -10,13 +20,14 @@ export function getNicelyFormattedParamsFromTags(specs: Spec[]) {
 		}`.trim()
 	);
 }
+
 export function getNicelyFormattedFontosdkFromTags(specs: Spec[]) {
 	const fontosdks = specs.filter(spec => spec.tag === 'fontosdk');
 	if (!fontosdks.length) {
 		return [];
 	}
 	if (fontosdks.length > 1) {
-		throw new Error('Much confuse, more than 1 @fontosdks statement');
+		throw new Error('Much confuse, more than 1 @fontosdk statement');
 	}
 	return fontosdks.map(fontosdk => ['@fontosdk', fontosdk.name].join(' ').trim());
 }

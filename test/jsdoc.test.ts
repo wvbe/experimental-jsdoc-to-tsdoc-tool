@@ -13,6 +13,20 @@ function tsdoc(strs: TemplateStringsArray) {
 	return strs.join('').trimEnd();
 }
 
+Deno.test('@abstract', () =>
+	assertEquals(
+		jsdoc`
+			/**
+			 * @abstract
+			 */
+		`,
+		tsdoc`
+			/**
+			 * @virtual
+			 */
+		`
+	)
+);
 Deno.test('Description, simple', () =>
 	assertEquals(
 		jsdoc`
@@ -163,7 +177,7 @@ Deno.test('@fontosdk and members', () =>
 	)
 );
 
-Deno.test('Return', () => 
+Deno.test('Return', () =>
 	assertEquals(
 		jsdoc`
 			/**
@@ -178,7 +192,7 @@ Deno.test('Return', () =>
 	)
 );
 
-Deno.test('Returns', () => 
+Deno.test('Returns', () =>
 	assertEquals(
 		jsdoc`
 			/**
