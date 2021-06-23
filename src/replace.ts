@@ -1,5 +1,9 @@
 import { parse, Block } from 'https://esm.sh/comment-parser';
-import { getNicelyFormattedParamsFromTags, getNicelyWrappedDescription } from './formatting.ts';
+import {
+	getNicelyFormattedParamsFromTags,
+	getNicelyWrappedDescription,
+	getNicelyFormattedFontosdkFromTags
+} from './formatting.ts';
 
 const MAX_LINE_WIDTH = 120;
 const TAB_WIDTH = 4;
@@ -24,7 +28,10 @@ export function getTsdocStringForJsdocAst(ast: Block): string {
 			'\n' + getNicelyWrappedDescription(ast.description, maxContentWidth, tab + ' * ');
 	}
 
-	comment += [...getNicelyFormattedParamsFromTags(ast.tags)]
+	comment += [
+		...getNicelyFormattedParamsFromTags(ast.tags),
+		...getNicelyFormattedFontosdkFromTags(ast.tags)
+	]
 		.map(line => eol + ' * ' + line)
 		.join('');
 	comment += eol + ' */';

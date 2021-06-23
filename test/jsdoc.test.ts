@@ -132,3 +132,33 @@ Deno.test('Parameter, default value is ignored', () =>
 		`
 	)
 );
+
+Deno.test('@fontosdk', () =>
+	assertEquals(
+		jsdoc`
+			/**
+			 * @fontosdk
+			 */
+		`,
+		tsdoc`
+			/**
+			 * @fontosdk
+			 */
+		`
+	)
+);
+
+Deno.test('@fontosdk and members', () =>
+	assertEquals(
+		jsdoc`
+			/**
+			 * @fontosdk members
+			 */
+		`,
+		tsdoc`
+			/**
+			 * @fontosdk members
+			 */
+		`
+	)
+);

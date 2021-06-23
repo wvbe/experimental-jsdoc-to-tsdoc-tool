@@ -10,7 +10,16 @@ export function getNicelyFormattedParamsFromTags(specs: Spec[]) {
 		}`.trim()
 	);
 }
-
+export function getNicelyFormattedFontosdkFromTags(specs: Spec[]) {
+	const fontosdks = specs.filter(spec => spec.tag === 'fontosdk');
+	if (!fontosdks.length) {
+		return [];
+	}
+	if (fontosdks.length > 1) {
+		throw new Error('Much confuse, more than 1 @fontosdks statement');
+	}
+	return fontosdks.map(fontosdk => ['@fontosdk', fontosdk.name].join(' ').trim());
+}
 export function getNicelyWrappedDescription(description: string, width: number, linePrefix = '') {
 	return wrap(description, { width: width, indent: linePrefix })
 		.split('\n')
