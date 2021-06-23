@@ -1,7 +1,8 @@
 import { parse, Block } from 'https://esm.sh/comment-parser';
 import {
-	getNicelyFormattedParamsFromTags,
 	getNicelyWrappedDescription,
+	getNicelyFormattedReturnFromTags,
+	getNicelyFormattedParamsFromTags,
 	getNicelyFormattedFontosdkFromTags
 } from './formatting.ts';
 
@@ -30,7 +31,8 @@ export function getTsdocStringForJsdocAst(ast: Block): string {
 
 	comment += [
 		...getNicelyFormattedParamsFromTags(ast.tags),
-		...getNicelyFormattedFontosdkFromTags(ast.tags)
+		...getNicelyFormattedFontosdkFromTags(ast.tags),
+		...getNicelyFormattedReturnFromTags(ast.tags)
 	]
 		.map(line => eol + ' * ' + line)
 		.join('');

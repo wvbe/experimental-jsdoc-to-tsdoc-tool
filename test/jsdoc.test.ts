@@ -162,3 +162,33 @@ Deno.test('@fontosdk and members', () =>
 		`
 	)
 );
+
+Deno.test('Return', () => 
+	assertEquals(
+		jsdoc`
+			/**
+			 * @return {string} This is the return.
+			 */
+		`,
+		tsdoc`
+			/**
+			 * @return This is the return.
+			 */
+		`
+	)
+);
+
+Deno.test('Returns', () => 
+	assertEquals(
+		jsdoc`
+			/**
+			 * @returns {string[]} This is the return.
+			 */
+		`,
+		tsdoc`
+			/**
+			 * @return This is the return.
+			 */
+		`
+	)
+);

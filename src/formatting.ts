@@ -20,6 +20,19 @@ export function getNicelyFormattedFontosdkFromTags(specs: Spec[]) {
 	}
 	return fontosdks.map(fontosdk => ['@fontosdk', fontosdk.name].join(' ').trim());
 }
+
+export function getNicelyFormattedReturnFromTags(specs: Spec[]) {
+	const returnValues = specs.filter(spec => spec.tag === 'return' || spec.tag === 'returns');
+
+	if (returnValues.length > 1) {
+		throw new Error('Much confuse, more than 1 @return statement');
+	}
+
+	return returnValues.map(returnValue =>
+		`@return ${returnValue.name} ${returnValue.description}`.trim()
+	)
+}
+
 export function getNicelyWrappedDescription(description: string, width: number, linePrefix = '') {
 	return wrap(description, { width: width, indent: linePrefix })
 		.split('\n')
