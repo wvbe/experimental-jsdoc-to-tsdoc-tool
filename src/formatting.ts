@@ -35,6 +35,17 @@ export function getNicelyFormattedFontosdkFromTags(specs: Spec[]) {
   );
 }
 
+// @internal
+export function getNicelyFormattedInternalFromTags(specs: Spec[]) {
+  const internalTags = specs.filter((spec) => spec.tag === "internal");
+  if (internalTags.length > 1) {
+    throw new Error("Much confuse, more than 1 @internal statement");
+  }
+  return internalTags.map((internal) =>
+    ["@internal", internal.name, internal.description].join(" ").trim()
+  );
+}
+
 // @param
 export function getNicelyFormattedParamsFromTags(specs: Spec[]) {
   const params = specs.filter((spec) => spec.tag === "param");
