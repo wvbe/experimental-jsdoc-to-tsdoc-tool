@@ -177,6 +177,19 @@ Deno.test('@fontosdk and members', () =>
 	)
 );
 
+Deno.test('Return without a description', () =>
+	assertEquals(
+		jsdoc`
+			/**
+			 * @return {string}
+			 */
+		`,
+		tsdoc`
+			/**
+			 */
+		`
+	)
+);
 Deno.test('Return', () =>
 	assertEquals(
 		jsdoc`

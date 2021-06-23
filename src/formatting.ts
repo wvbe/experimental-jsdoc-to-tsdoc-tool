@@ -11,6 +11,7 @@ export function getNicelyFormattedAbstractFromTags(specs: Spec[]) {
 	}
 	return ['@virtual']
 }
+
 export function getNicelyFormattedParamsFromTags(specs: Spec[]) {
 	const params = specs.filter(spec => spec.tag === 'param');
 	const maxNameLength = params.reduce((length, param) => Math.max(length, param.name.length), 0);
@@ -23,9 +24,6 @@ export function getNicelyFormattedParamsFromTags(specs: Spec[]) {
 
 export function getNicelyFormattedFontosdkFromTags(specs: Spec[]) {
 	const fontosdks = specs.filter(spec => spec.tag === 'fontosdk');
-	if (!fontosdks.length) {
-		return [];
-	}
 	if (fontosdks.length > 1) {
 		throw new Error('Much confuse, more than 1 @fontosdk statement');
 	}
@@ -34,11 +32,12 @@ export function getNicelyFormattedFontosdkFromTags(specs: Spec[]) {
 
 export function getNicelyFormattedReturnFromTags(specs: Spec[]) {
 	const returnValues = specs.filter(spec => spec.tag === 'return' || spec.tag === 'returns');
-
 	if (returnValues.length > 1) {
 		throw new Error('Much confuse, more than 1 @return statement');
 	}
-
+	if (!returnValues[0]?.description) {
+		return [];
+	}
 	return returnValues.map(returnValue =>
 		`@return ${returnValue.name} ${returnValue.description}`.trim()
 	)
