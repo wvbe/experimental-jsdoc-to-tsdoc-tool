@@ -82,15 +82,26 @@ export function getNicelyFormattedSeeFromTags(specs: Spec[]) {
 }
 
 // Descrpition
-export function getNicelyWrappedDescription(
+export function getDescriptionAndRemarks(
   description: string,
   specs: Spec[],
 ) {
-  const concatted = specs.filter((spec) => spec.tag === "description").reduce<
-    string
-  >(
-    (desc, spec) => desc + "\n\n" + spec.name + " " + spec.description,
-    description,
-  ).trim();
-  return concatted.length ? concatted.split("\n") : [];
+  const summary = specs.find((spec) => spec.tag === "summary");
+
+  // In case a JSDoc description as well as @description are given, join them with newlines;
+  const combinedDescription = specs.filter((spec) => spec.tag === "description")
+    .reduce<
+      string
+    >(
+      (desc, spec) => desc + "\n\n" + (spec.name + " " + spec.description),
+      description.trimEnd(),
+    ).trim();
+
+  return [
+    `${summary?.name || ""} ${summary?.description || ""}`,
+    summary ? "\n@remarks\n" + combinedDescription : combinedDescription,
+  ].map((text) => text.trimEnd()).filter(Boolean).reduce<string[]>(
+    (lines, text) => lines.concat(text.split("\n")),
+    [],
+  );
 }

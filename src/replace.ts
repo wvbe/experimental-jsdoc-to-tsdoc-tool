@@ -1,5 +1,6 @@
 import { Block, parse } from "https://esm.sh/comment-parser";
 import {
+  getDescriptionAndRemarks,
   getNicelyFormattedAbstractFromTags,
   getNicelyFormattedDeprecatedFromTags,
   getNicelyFormattedFontosdkFromTags,
@@ -7,7 +8,6 @@ import {
   getNicelyFormattedParamsFromTags,
   getNicelyFormattedReturnFromTags,
   getNicelyFormattedSeeFromTags,
-  getNicelyWrappedDescription,
 } from "./formatting.ts";
 
 export async function getJsdocAstsForFile(filePath: string) {
@@ -22,7 +22,7 @@ export function getTsdocStringForJsdocAst(ast: Block): string {
   const tab = ast.source[0].tokens.start;
   const eol = "\n" + tab;
 
-  const description = getNicelyWrappedDescription(
+  const description = getDescriptionAndRemarks(
     ast.description,
     ast.tags,
   );
