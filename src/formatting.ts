@@ -99,7 +99,7 @@ export function getDescriptionAndRemarks(
 
   return [
     `${summary?.name || ""} ${summary?.description || ""}`,
-    summary ? "\n@remarks\n" + combinedDescription : combinedDescription,
+    summary && combinedDescription ? "\n@remarks\n" + combinedDescription : combinedDescription,
   ].map((text) => text.trimEnd()).filter(Boolean).reduce<string[]>(
     (lines, text) => lines.concat(text.split("\n")),
     [],

@@ -146,3 +146,16 @@ Deno.test("Description and @summary", () =>
            */
         `,
   ));
+Deno.test("@summary only", () =>
+  assertEquals(
+    jsdoc`
+          /**
+           * @summary This is the summary
+           */
+        `,
+    tsdoc`
+          /**
+           * This is the summary
+           */
+        `,
+  ));
