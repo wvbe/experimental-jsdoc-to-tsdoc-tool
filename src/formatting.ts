@@ -12,6 +12,17 @@ export function getNicelyFormattedAbstractFromTags(specs: Spec[]) {
   return ["@virtual"];
 }
 
+// @category
+export function getNicelyFormattedCategoryFromTags(specs: Spec[]) {
+  const categories = specs.filter((spec) => spec.tag === "category");
+  if (categories.length > 1) {
+    throw new Error("Much confuse, more than 1 @category statement");
+  }
+  return categories.map((category) =>
+    ["@category", category.name, category.description].join(" ").trim()
+  );
+}
+
 // @deprecated
 export function getNicelyFormattedDeprecatedFromTags(specs: Spec[]) {
   const deprecated = specs.filter((spec) => spec.tag === "deprecated");
@@ -99,7 +110,9 @@ export function getDescriptionAndRemarks(
 
   return [
     `${summary?.name || ""} ${summary?.description || ""}`,
-    summary && combinedDescription ? "\n@remarks\n" + combinedDescription : combinedDescription,
+    summary && combinedDescription
+      ? "\n@remarks\n" + combinedDescription
+      : combinedDescription,
   ].map((text) => text.trimEnd()).filter(Boolean).reduce<string[]>(
     (lines, text) => lines.concat(text.split("\n")),
     [],
