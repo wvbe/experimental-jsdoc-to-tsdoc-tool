@@ -1,5 +1,5 @@
 import { assertEquals } from "https://deno.land/std@0.99.0/testing/asserts.ts";
-import { jsdoc, tsdoc } from "./util.ts";
+import { jsdoc, tsdoc } from "../util.ts";
 
 // Just a single parameter without description
 //   The TSDoc playground will complain if a param name is not followed by a hyphen.

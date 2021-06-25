@@ -1,30 +1,30 @@
 import { assertEquals } from "https://deno.land/std@0.99.0/testing/asserts.ts";
-import { jsdoc, tsdoc } from "./util.ts";
+import { jsdoc, tsdoc } from "../util.ts";
 
-Deno.test("@category", () =>
+Deno.test("@fontosdk", () =>
   assertEquals(
     jsdoc`
       /**
-       * @category
+       * @fontosdk
        */
     `,
     tsdoc`
       /**
-       * @category
+       * @fontosdk
        */
     `,
   ));
 
-Deno.test("@category and description", () =>
+Deno.test("@fontosdk and members", () =>
   assertEquals(
     jsdoc`
       /**
-       * @category configuration/experiment
+       * @fontosdk members
        */
     `,
     tsdoc`
       /**
-       * @category configuration/experiment
+       * @fontosdk members
        */
     `,
   ));
