@@ -1,8 +1,11 @@
-import { getJsdocAstsForFile } from "./src/replace.ts";
+import { replaceJsdocWithTsdoc } from "./src/replace.ts";
 
-/**
- * What
- */
+async function transformFile(fileIn: string, fileOut: string): Promise<void> {
+  await Deno.writeTextFile(
+    fileOut,
+    replaceJsdocWithTsdoc(await Deno.readTextFile(fileIn)),
+  );
+}
 
-// skeet
-console.log(await getJsdocAstsForFile(Deno.args[0]));
+await transformFile(Deno.args[0], Deno.args[1]);
+console.log("OK");

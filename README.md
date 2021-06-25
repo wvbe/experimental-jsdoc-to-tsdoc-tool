@@ -7,10 +7,17 @@ you yet.
 The tool is written in [Deno](https://deno.land/) (Typescript) for simplicity,
 but may migrate to NodeJS if the need arises.
 
-For now, unit tests have been developed. Run them via command line:
+# Usage
 
 ```sh
-deno test
+# Install to $PATH
+deno install --allow-read --allow-write --name jsdoc-to-tsdoc ./bin.ts
+
+# Convert 1 file, write to the original location
+jsdoc-to-tsdoc my-file.js my-file.js
+
+# Run unit tests:
+deno test --allow-read
 ```
 
 ## How JSDoc is used as TSDoc
