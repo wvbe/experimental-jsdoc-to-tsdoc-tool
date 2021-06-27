@@ -7,6 +7,7 @@ import {
   getParamTags,
   getReturnTags,
   getSeeTags,
+  getThrowsTag,
   getVirtualTags,
 } from "./tags.ts";
 
@@ -38,6 +39,7 @@ export function getTsdocStringForJsdocAst(ast: Block): string {
     [
       // Then the API shape itself
       ...getVirtualTags(ast.tags),
+      ...getThrowsTag(ast.tags),
       ...getParamTags(ast.tags),
       ...getReturnTags(ast.tags),
     ],

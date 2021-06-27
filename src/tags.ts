@@ -42,6 +42,14 @@ export function getParamTags(specs: Spec[]) {
       .trim()
   );
 }
+export function getThrowsTag(specs: Spec[]) {
+  const tags = specs.filter((spec) => spec.tag === "throws");
+  return tags.reduce<string[]>((lines, param) =>
+    lines.concat([
+      `@throws ${param.type ? `{@link ${param.type}}` : ""}`.trim(),
+      ...formatMarkdown(`${param.name} ${param.description}`).split("\n"),
+    ].filter(Boolean)), []);
+}
 
 // Descrpition
 export function getDescriptionAndRemarksTag(
