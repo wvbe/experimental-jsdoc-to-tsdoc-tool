@@ -50,16 +50,13 @@ export function getTsdocStringForJsdocAst(ast: Block): string {
 
 export function replaceJsdocWithTsdoc(fileContents: string): string {
   const rawLines = fileContents.split("\n");
-  const asts = getJsdocAstsForFileContents(fileContents);
-  // Splice the generated Typescript in
-  asts.reverse().forEach((ast) => {
+  getJsdocAstsForFileContents(fileContents).reverse().forEach((ast) => {
     const firstLine = ast.source[0];
     const lastLine = ast.source[ast.source.length - 1];
-    const tsdocLines = getTsdocStringForJsdocAst(ast).split("\n");
     rawLines.splice(
       firstLine.number,
       lastLine.number - firstLine.number + 1,
-      ...tsdocLines,
+      ...getTsdocStringForJsdocAst(ast).split("\n"),
     );
   });
   return rawLines.join("\n");

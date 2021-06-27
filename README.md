@@ -11,10 +11,16 @@ but may migrate to NodeJS if the need arises.
 
 ```sh
 # Install to $PATH
-deno install --allow-read --allow-write --name jsdoc-to-tsdoc ./bin.ts
+deno install --allow-read --allow-write --unstable --name jsdoc-to-tsdoc ./bin.ts
 
 # Convert 1 file, write to the original location
 jsdoc-to-tsdoc my-file.js my-file.js
+jsdoc-to-tsdoc --in my-file.js --out my-file.js
+
+# Convert one or many files and write in place
+jsdoc-to-tsdoc --update-in-place --in my-file.js
+jsdoc-to-tsdoc --update-in-place --glob "**/*.{js,jsx,ts,tsx}"
+
 
 # Run unit tests:
 deno test --allow-read
