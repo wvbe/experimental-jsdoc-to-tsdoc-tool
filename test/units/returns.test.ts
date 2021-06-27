@@ -23,7 +23,7 @@ Deno.test("@return", () =>
     `,
     tsdoc`
       /**
-       * @return This is the return.
+       * @returns This is the return.
        */
     `,
   ));
@@ -37,7 +37,7 @@ Deno.test("@returns", () =>
     `,
     tsdoc`
       /**
-       * @return This is the return.
+       * @returns This is the return.
        */
     `,
   ));

@@ -5,7 +5,7 @@ import {
   getDescriptionAndRemarksTag,
   getInternalTags,
   getParamTags,
-  getReturnTags,
+  getReturnsTags,
   getSeeTags,
   getThrowsTag,
   getVirtualTags,
@@ -41,7 +41,7 @@ export function getTsdocStringForJsdocAst(ast: Block): string {
       ...getVirtualTags(ast.tags),
       ...getThrowsTag(ast.tags),
       ...getParamTags(ast.tags),
-      ...getReturnTags(ast.tags),
+      ...getReturnsTags(ast.tags),
     ],
   ].reduce((all, block) => {
     const isEmpty = !block.some(Boolean);

@@ -13,14 +13,14 @@ export function getInternalTags(specs: Spec[]) {
   return serializeTag(specs, "internal");
 }
 
-export function getReturnTags(specs: Spec[]) {
+export function getReturnsTags(specs: Spec[]) {
   return [
     ...serializeTag(specs, "return", {
-      tsdocTagName: "return",
+      tsdocTagName: "returns",
       omitWhenEmpty: true,
     }),
     ...serializeTag(specs, "returns", {
-      tsdocTagName: "return",
+      tsdocTagName: "returns",
       omitWhenEmpty: true,
     }),
   ];
