@@ -44,9 +44,9 @@ Deno.test("Description, long and line-wrapping", () =>
     `,
     tsdoc`
       /**
-       * This description with some really long lines. This description with some really long lines. This description with some really long lines. This description with some really
-       * long lines. This description
-       * with some really weird wrapping.
+       * This description with some really long lines. This description with some really
+       * long lines. This description with some really long lines. This description with
+       * some really long lines. This description with some really weird wrapping.
        */
     `,
   ));
@@ -75,8 +75,7 @@ Deno.test("@description on two lines", () =>
       `,
     tsdoc`
         /**
-         * This is
-         * a description.
+         * This is a description.
          */
       `,
   ));

@@ -1,4 +1,6 @@
 import { Spec } from "https://esm.sh/comment-parser";
+import * as prettier from "https://esm.sh/prettier";
+import markdownParser from "https://esm.sh/prettier/parser-markdown";
 
 // @abstract
 export function getNicelyFormattedAbstractFromTags(specs: Spec[]) {
@@ -92,29 +94,36 @@ export function getNicelyFormattedSeeFromTags(specs: Spec[]) {
   return seeTags.map((see) => `@see ${see.name} ${see.description}`.trim());
 }
 
+function formatMarkdown(md: string): string {
+  return prettier
+    .format(md, {
+      plugins: [markdownParser],
+      parser: "markdown",
+      proseWrap: "always",
+    })
+    .trim();
+}
 // Descrpition
-export function getDescriptionAndRemarks(
-  description: string,
-  specs: Spec[],
-) {
+export function getDescriptionAndRemarks(description: string, specs: Spec[]) {
   const summary = specs.find((spec) => spec.tag === "summary");
 
   // In case a JSDoc description as well as @description are given, join them with newlines;
-  const combinedDescription = specs.filter((spec) => spec.tag === "description")
-    .reduce<
-      string
-    >(
-      (desc, spec) => desc + "\n\n" + (spec.name + " " + spec.description),
-      description.trimEnd(),
-    ).trim();
+  const combinedDescription = specs
+    .filter((spec) => spec.tag === "description")
+    .reduce<string>(
+      (desc, spec) =>
+        desc + "\n\n" + formatMarkdown(spec.name + " " + spec.description),
+      formatMarkdown(description),
+    )
+    .trim();
 
   return [
     `${summary?.name || ""} ${summary?.description || ""}`,
     summary && combinedDescription
       ? "\n@remarks\n" + combinedDescription
       : combinedDescription,
-  ].map((text) => text.trimEnd()).filter(Boolean).reduce<string[]>(
-    (lines, text) => lines.concat(text.split("\n")),
-    [],
-  );
+  ]
+    .map((text) => text.trimEnd())
+    .filter(Boolean)
+    .reduce<string[]>((lines, text) => lines.concat(text.split("\n")), []);
 }

@@ -1,14 +1,14 @@
 /**
  * A nodeId is the unique identifier for a node.
  *
- * Note that this ID has no relation with any id attribute and it is not stable across Fonto
- * instances or sessions.
+ * Note that this ID has no relation with any id attribute and it is not stable
+ * across Fonto instances or sessions.
  *
- * The NodeId of a node can be retrieved using the {@link getNodeId} function present in
- * fontoxml-dom-identification.
+ * The NodeId of a node can be retrieved using the {@link getNodeId} function
+ * present in fontoxml-dom-identification.
  *
- * NodeIds can be resolved to a node using either the {@link Blueprint#lookup} and the
- * {@link Dom#lookup} methods.
+ * NodeIds can be resolved to a node using either the {@link Blueprint#lookup} and
+ * the {@link Dom#lookup} methods.
  *
  * @fontosdk
  */
@@ -23,7 +23,8 @@ function setNodeId(node) {
 }
 
 /**
- * Get the existing node ID for the given node or generate a new one if none has been set
+ * Get the existing node ID for the given node or generate a new one if none has
+ * been set
  *
  * @fontosdk
  * @param node - A node from which to get a nodeId
