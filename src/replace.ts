@@ -1,15 +1,14 @@
 import { Block, parse } from "https://esm.sh/comment-parser";
+import { serializeTag } from "./formatting.ts";
 import {
-  getDescriptionAndRemarks,
-  getNicelyFormattedAbstractFromTags,
-  getNicelyFormattedCategoryFromTags,
-  getNicelyFormattedDeprecatedFromTags,
-  getNicelyFormattedFontosdkFromTags,
-  getNicelyFormattedInternalFromTags,
-  getNicelyFormattedParamsFromTags,
-  getNicelyFormattedReturnFromTags,
-  getNicelyFormattedSeeFromTags,
-} from "./formatting.ts";
+  getDeprecatedTags,
+  getDescriptionAndRemarksTag,
+  getInternalTags,
+  getParamTags,
+  getReturnTags,
+  getSeeTags,
+  getVirtualTags,
+} from "./tags.ts";
 
 export function getJsdocAstsForFileContents(fileContents: string): Block[] {
   return parse(fileContents, { spacing: "preserve" });
@@ -19,33 +18,42 @@ export function getTsdocStringForJsdocAst(ast: Block): string {
   const tab = ast.source[0].tokens.start;
   const eol = "\n" + tab;
 
-  const description = getDescriptionAndRemarks(
-    ast.description,
-    ast.tags,
-  );
+  // Create a few "groups" of adjacent lines, and wrap everything in a "/**" codeblock
+  const innerDoclet = [
+    [
+      // The summary, description, and more information go at the top
+      ...getDescriptionAndRemarksTag(
+        ast.description,
+        ast.tags,
+      ),
+      ...getSeeTags(ast.tags),
+    ],
+    [
+      // Then some TSdoc about the API status
+      ...getDeprecatedTags(ast.tags),
+      ...serializeTag(ast.tags, "fontosdk"),
+      ...serializeTag(ast.tags, "category"),
+      ...getInternalTags(ast.tags),
+    ],
+    [
+      // Then the API shape itself
+      ...getVirtualTags(ast.tags),
+      ...getParamTags(ast.tags),
+      ...getReturnTags(ast.tags),
+    ],
+  ].reduce((all, block) => {
+    const isEmpty = !block.some(Boolean);
+    if (isEmpty) {
+      return all;
+    }
+    if (all.length) {
+      // A newline separates blocks from one another
+      all.push("");
+    }
+    return all.concat(block);
+  }, []).map((line) => `${eol} * ${line}`.trimEnd());
 
-  const tags = [
-    ...getNicelyFormattedAbstractFromTags(ast.tags),
-    ...getNicelyFormattedCategoryFromTags(ast.tags),
-    ...getNicelyFormattedDeprecatedFromTags(ast.tags),
-    ...getNicelyFormattedFontosdkFromTags(ast.tags),
-    ...getNicelyFormattedInternalFromTags(ast.tags),
-    ...getNicelyFormattedParamsFromTags(ast.tags),
-    ...getNicelyFormattedReturnFromTags(ast.tags),
-    ...getNicelyFormattedSeeFromTags(ast.tags),
-  ];
-
-  // Wrap everything in a "/**" comment block, and separate the description from all other
-  //   tags with a newline.
-  return tab + "/**" + [
-    ...description,
-    description.length && tags.length ? "" : null,
-    ...tags,
-  ]
-    .filter((line) => line !== null)
-    .map((line) => (eol + " * " + line).trimEnd())
-    .join("") +
-    eol + " */";
+  return `${tab}/**${innerDoclet.join("")}${eol} */`;
 }
 
 export function replaceJsdocWithTsdoc(fileContents: string): string {

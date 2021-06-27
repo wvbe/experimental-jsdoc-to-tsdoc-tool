@@ -27,6 +27,7 @@ function setNodeId(node) {
  * been set
  *
  * @fontosdk
+ *
  * @param node - A node from which to get a nodeId
  * @return The unique id for a node
  */
