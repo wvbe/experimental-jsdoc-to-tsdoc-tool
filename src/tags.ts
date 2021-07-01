@@ -12,6 +12,10 @@ export function getDeprecatedTags(specs: Spec[]) {
   return serializeTag(specs, "deprecated");
 }
 
+export function getDoctypeTags(specs: Spec[]) {
+  return serializeTag(specs, "doctype");
+}
+
 export function getInternalTags(specs: Spec[]) {
   return serializeTag(specs, "internal");
 }
