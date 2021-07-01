@@ -13,10 +13,6 @@ export function getInternalTags(specs: Spec[]) {
   return serializeTag(specs, "internal");
 }
 
-export function getLinkTags(specs: Spec[]) {
-  return serializeTag(specs, "link");
-}
-
 export function getReturnsTags(specs: Spec[]) {
   return [
     ...serializeTag(specs, "return", {

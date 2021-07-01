@@ -4,7 +4,6 @@ import {
   getDeprecatedTags,
   getDescriptionAndRemarksTag,
   getInternalTags,
-  getLinkTags,
   getParamTags,
   getReturnsTags,
   getSeeTags,
@@ -39,7 +38,6 @@ export function getTsdocStringForJsdocAst(ast: Block): string {
     ],
     [
       // Then the API shape itself
-      ...getLinkTags(ast.tags),
       ...getVirtualTags(ast.tags),
       ...getThrowsTag(ast.tags),
       ...getParamTags(ast.tags),
