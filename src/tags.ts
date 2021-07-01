@@ -16,6 +16,10 @@ export function getDoctypeTags(specs: Spec[]) {
   return serializeTag(specs, "doctype");
 }
 
+export function getHideconstructorTags(specs: Spec[]) {
+  return serializeTag(specs, "hideconstructor", { tsdocTagName: "internal" });
+}
+
 export function getInternalTags(specs: Spec[]) {
   return serializeTag(specs, "internal");
 }
