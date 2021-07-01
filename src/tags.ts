@@ -4,6 +4,9 @@ import { formatMarkdown, serializeTag } from "./formatting.ts";
 export function getVirtualTags(specs: Spec[]) {
   return serializeTag(specs, "abstract", { tsdocTagName: "virtual" });
 }
+export function getConstTags(specs: Spec[]) {
+  return serializeTag(specs, "const");
+}
 
 export function getDeprecatedTags(specs: Spec[]) {
   return serializeTag(specs, "deprecated");
