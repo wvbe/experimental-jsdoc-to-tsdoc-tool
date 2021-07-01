@@ -49,6 +49,11 @@ export function getParamTags(specs: Spec[]) {
       .trim()
   );
 }
+
+export function getReactTags(specs: Spec[]) {
+  return serializeTag(specs, "react");
+}
+
 export function getThrowsTag(specs: Spec[]) {
   const tags = specs.filter((spec) => spec.tag === "throws");
   return tags.reduce<string[]>((lines, param) =>

@@ -7,6 +7,7 @@ import {
   getDoctypeTags,
   getInternalTags,
   getParamTags,
+  getReactTags,
   getReturnsTags,
   getSeeTags,
   getThrowsTag,
@@ -45,6 +46,7 @@ export function getTsdocStringForJsdocAst(ast: Block): string {
       ...getVirtualTags(ast.tags),
       ...getThrowsTag(ast.tags),
       ...getParamTags(ast.tags),
+      ...getReactTags(ast.tags),
       ...getReturnsTags(ast.tags),
     ],
   ].reduce((all, block) => {
