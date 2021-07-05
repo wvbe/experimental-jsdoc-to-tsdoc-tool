@@ -5,6 +5,7 @@ import {
   getDeprecatedTags,
   getDescriptionAndRemarksTag,
   getDoctypeTags,
+  getExampleTags,
   getHideconstructorTags,
   getInternalTags,
   getParamTags,
@@ -44,6 +45,7 @@ export function getTsdocStringForJsdocAst(ast: Block): string {
       // Then the API shape itself
       ...getConstTags(ast.tags),
       ...getDoctypeTags(ast.tags),
+      ...getExampleTags(ast.tags),
       ...getHideconstructorTags(ast.tags),
       ...getVirtualTags(ast.tags),
       ...getThrowsTag(ast.tags),
