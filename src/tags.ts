@@ -16,6 +16,24 @@ export function getDoctypeTags(specs: Spec[]) {
   return serializeTag(specs, "doctype");
 }
 
+export function getExampleTags(specs: Spec[]) {
+  const tags = specs.filter((spec) => spec.tag === "example");
+  return tags.reduce<string[]>((lines, param) => {
+    let text = `${param.name} ${param.description}`;
+    if (!text.trim()) {
+      // Skip @example altogether if it has no content
+      return lines;
+    }
+    if (!text.includes(`\`\`\``)) {
+      // If @example did not already contain a Markdown codeblock, assume that the
+      // entire @example content must in fact be a markdown codeblock
+      text = `\`\`\`${text}\n\`\`\``;
+    }
+
+    return lines.concat([`@example`, ...formatMarkdown(text).split("\n")]);
+  }, []);
+}
+
 export function getHideconstructorTags(specs: Spec[]) {
   return serializeTag(specs, "hideconstructor", { tsdocTagName: "internal" });
 }
@@ -60,11 +78,16 @@ export function getReactTags(specs: Spec[]) {
 
 export function getThrowsTag(specs: Spec[]) {
   const tags = specs.filter((spec) => spec.tag === "throws");
-  return tags.reduce<string[]>((lines, param) =>
-    lines.concat([
-      `@throws ${param.type ? `{@link ${param.type}}` : ""}`.trim(),
-      ...formatMarkdown(`${param.name} ${param.description}`).split("\n"),
-    ].filter(Boolean)), []);
+  return tags.reduce<string[]>(
+    (lines, param) =>
+      lines.concat(
+        [
+          `@throws ${param.type ? `{@link ${param.type}}` : ""}`.trim(),
+          ...formatMarkdown(`${param.name} ${param.description}`).split("\n"),
+        ].filter(Boolean),
+      ),
+    [],
+  );
 }
 
 // Descrpition
