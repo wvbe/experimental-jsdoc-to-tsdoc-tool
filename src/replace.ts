@@ -12,7 +12,7 @@ import {
   getReactTags,
   getReturnsTags,
   getSeeTags,
-  getThrowsTag,
+  getThrowsTags,
   getVirtualTags,
 } from "./tags.ts";
 
@@ -48,7 +48,7 @@ export function getTsdocStringForJsdocAst(ast: Block): string {
       ...getExampleTags(ast.tags),
       ...getHideconstructorTags(ast.tags),
       ...getVirtualTags(ast.tags),
-      ...getThrowsTag(ast.tags),
+      ...getThrowsTags(ast.tags),
       ...getParamTags(ast.tags),
       ...getReactTags(ast.tags),
       ...getReturnsTags(ast.tags),
@@ -64,6 +64,11 @@ export function getTsdocStringForJsdocAst(ast: Block): string {
     }
     return all.concat(block);
   }, []).map((line) => `${eol} * ${line}`.trimEnd());
+
+  // Avoid return empty doclets.
+  if (!innerDoclet.length) {
+    return "";
+  }
 
   return `${tab}/**${innerDoclet.join("")}${eol} */`;
 }

@@ -14,6 +14,10 @@ export function jsdoc(strs: TemplateStringsArray) {
   if (asts.length !== 1) {
     throw new Error(`Expected exactly 1 doclet, got ${asts.length}`);
   }
+
+  if (!getTsdocStringForJsdocAst(asts[0])) {
+    return "";
+  }
   return "\n" + getTsdocStringForJsdocAst(asts[0]);
 }
 

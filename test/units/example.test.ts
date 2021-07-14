@@ -8,10 +8,7 @@ Deno.test("@example, empty", () =>
        * @example
        */
     `,
-    tsdoc`
-      /**
-       */
-    `,
+    tsdoc``,
   ));
 
 Deno.test("@example, with a code example", () =>

@@ -8,10 +8,7 @@ Deno.test("@return, without a description", () =>
        * @return {string}
        */
     `,
-    tsdoc`
-      /**
-       */
-    `,
+    tsdoc``,
   ));
 
 Deno.test("@return", () =>
