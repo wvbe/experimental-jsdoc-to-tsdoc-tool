@@ -1,4 +1,5 @@
 import { Block, parse } from "https://esm.sh/comment-parser";
+import * as Colors from "https://deno.land/std@0.99.0/fmt/colors.ts";
 import { serializeTag } from "./formatting.ts";
 import {
   getConstTags,
@@ -13,6 +14,7 @@ import {
   getReturnsTags,
   getSeeTags,
   getThrowsTags,
+  getTypeTags,
   getVirtualTags,
 } from "./tags.ts";
 
@@ -49,6 +51,7 @@ export function getTsdocStringForJsdocAst(ast: Block): string {
       ...getHideconstructorTags(ast.tags),
       ...getVirtualTags(ast.tags),
       ...getThrowsTags(ast.tags),
+      ...getTypeTags(ast.tags),
       ...getParamTags(ast.tags),
       ...getReactTags(ast.tags),
       ...getReturnsTags(ast.tags),
@@ -73,7 +76,10 @@ export function getTsdocStringForJsdocAst(ast: Block): string {
   return `${tab}/**${innerDoclet.join("")}${eol} */`;
 }
 
-export function replaceJsdocWithTsdoc(fileContents: string): string {
+export function replaceJsdocWithTsdoc(
+  fileContents: string,
+  file?: string
+): string {
   const rawLines = fileContents.split("\n");
   getJsdocAstsForFileContents(fileContents).reverse().forEach((ast) => {
     const firstLine = ast.source[0];
@@ -84,5 +90,26 @@ export function replaceJsdocWithTsdoc(fileContents: string): string {
       ...getTsdocStringForJsdocAst(ast).split("\n"),
     );
   });
+
+  const typeOcurrences = rawLines.reduce(
+    function (
+      ocurrences: number[],
+      line: string,
+      lineNumber: number,
+    ): number[] {
+      if (line.includes("@type")) {
+        ocurrences.push(lineNumber + 1);
+      }
+      return ocurrences;
+    },
+    [],
+  );
+
+  if (typeOcurrences.length) {
+    typeOcurrences.map((ocurrence) =>
+      console.warn(Colors.yellow("[WARN]"), "@type in", file + ":" + ocurrence)
+    );
+  }
+
   return rawLines.join("\n");
 }

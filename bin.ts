@@ -12,7 +12,7 @@ export async function globFilesWithJsdoc(pattern: string) {
 async function transformFile(fileIn: string, fileOut: string): Promise<void> {
   await Deno.writeTextFile(
     fileOut,
-    replaceJsdocWithTsdoc(await Deno.readTextFile(fileIn)),
+    replaceJsdocWithTsdoc(await Deno.readTextFile(fileIn), fileIn),
   );
 }
 

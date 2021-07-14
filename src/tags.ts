@@ -90,6 +90,13 @@ export function getThrowsTags(specs: Spec[]) {
   );
 }
 
+export function getTypeTags(specs: Spec[]) {
+  const types = specs.filter((spec) => spec.tag === "type");
+  return types.map((type) => {
+    return `@type {${type.type}}`.trim();
+  });
+}
+
 // Descrpition
 export function getDescriptionAndRemarksTag(
   description: string,
