@@ -10,7 +10,7 @@ Deno.test("@hideconstructor", () =>
     `,
     tsdoc`
       /**
-       * @internal
+       * @hideconstructor
        */
     `,
   ));

@@ -78,7 +78,7 @@ export function getTsdocStringForJsdocAst(ast: Block): string {
 
 export function replaceJsdocWithTsdoc(
   fileContents: string,
-  file?: string
+  file?: string,
 ): string {
   const rawLines = fileContents.split("\n");
   getJsdocAstsForFileContents(fileContents).reverse().forEach((ast) => {

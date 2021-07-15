@@ -50,6 +50,23 @@ Deno.test("@param, alignment on name length", () =>
        */
     `,
   ));
+Deno.test("@param, long description that wraps and aligns nicely", () =>
+  assertEquals(
+    jsdoc`
+      /**
+       * @param {string} nerf Derp
+       * @param {string} nerfOfDifferentLength Derp skoobadee skoobadaai skoo skeeba fazskooob snaadoo doo daa daa daa nee nerf snoo skeebabadoo snaa doo daa daa daa nee.
+       */
+    `,
+    tsdoc`
+      /**
+       * @param nerf                  - Derp
+       * @param nerfOfDifferentLength - Derp skoobadee skoobadaai skoo skeeba fazskooob snaadoo
+	   *                                doo daa daa daa nee nerf snoo skeebabadoo snaa doo daa daa
+	   *                                daa nee.
+       */
+    `,
+  ));
 
 // Optional parameters. Optionality is left out, because this lives in TS
 Deno.test("@param, optionality is ignored", () =>

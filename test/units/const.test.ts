@@ -10,7 +10,7 @@ Deno.test("@const", () =>
     `,
     tsdoc`
       /**
-       * @const nerf
+       * @const {boolean} nerf
        */
     `,
   ));
