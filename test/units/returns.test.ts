@@ -41,15 +41,15 @@ Deno.test("@returns", () =>
 Deno.test("@returns", () =>
   assertEquals(
     jsdoc`
-		/**
-		 * @returns {string[]} This is the return.
-		 */
-	  `,
+    /**
+     * @returns {string[]} This is the return.
+     */
+    `,
     tsdoc`
-		/**
-		 * @returns This is the return.
-		 */
-	  `,
+    /**
+     * @returns This is the return.
+     */
+    `,
   ));
 
 Deno.test("@returns, with a long description", () =>
@@ -61,7 +61,7 @@ Deno.test("@returns, with a long description", () =>
     `,
     tsdoc`
       /**
-       * @returns  Derp skoobadee skoobadaai skoo skeeba fazskooob snaadoo doo daa daa daa
+       * @returns Derp skoobadee skoobadaai skoo skeeba fazskooob snaadoo doo daa daa daa
        * nee nerf snoo skeebabadoo snaa doo daa daa daa nee.
        */
     `,

@@ -1,5 +1,9 @@
 import { Spec } from "https://esm.sh/comment-parser";
-import { formatMarkdown, serializeTag } from "./formatting.ts";
+import {
+  formatMarkdown,
+  getMarkdownColumnLines,
+  serializeTag,
+} from "./formatting.ts";
 
 export function getVirtualTags(specs: Spec[]) {
   return serializeTag(specs, "abstract", { tsdocTagName: "virtual" });
@@ -65,11 +69,19 @@ export function getParamTags(specs: Spec[]) {
     (length, param) => Math.max(length, param.name.length),
     0,
   );
-  return params.map((param) =>
-    `@param ${param.name +
-      " ".repeat(maxNameLength - param.name.length)} - ${param.description}`
-      .trim()
-  );
+  return params.reduce<string[]>((lines, param) => {
+    const prefix = `@param ${param.name +
+      " ".repeat(maxNameLength - param.name.length)} - `;
+    return lines.concat(
+      getMarkdownColumnLines(
+        param.description,
+        80,
+        [prefix, " ".repeat(prefix.length)],
+        undefined,
+        true,
+      ),
+    );
+  }, []);
 }
 
 export function getReactTags(specs: Spec[]) {
