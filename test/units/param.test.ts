@@ -61,9 +61,9 @@ Deno.test("@param, long description that wraps and aligns nicely", () =>
     tsdoc`
       /**
        * @param nerf                  - Derp
-       * @param nerfOfDifferentLength - Derp skoobadee skoobadaai skoo skeeba fazskooob snaadoo
-	   *                                doo daa daa daa nee nerf snoo skeebabadoo snaa doo daa daa
-	   *                                daa nee.
+       * @param nerfOfDifferentLength - Derp skoobadee skoobadaai skoo skeeba fazskooob
+       *                                snaadoo doo daa daa daa nee nerf snoo skeebabadoo
+       *                                snaa doo daa daa daa nee.
        */
     `,
   ));

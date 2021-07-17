@@ -19,14 +19,14 @@ Deno.test("@see", () =>
 Deno.test("@see, with a long description", () =>
   assertEquals(
     jsdoc`
-		/**
-		 * @see Derp skoobadee skoobadaai skoo skeeba fazskooob snaadoo doo daa daa daa nee nerf snoo skeebabadoo snaa doo daa daa daa nee.
-		 */
-	  `,
+    /**
+     * @see Derp skoobadee skoobadaai skoo skeeba fazskooob snaadoo doo daa daa daa nee nerf snoo skeebabadoo snaa doo daa daa daa nee.
+     */
+    `,
     tsdoc`
-		/**
-		 * @see Derp skoobadee skoobadaai skoo skeeba fazskooob snaadoo doo daa daa daa
-		 * nee nerf snoo skeebabadoo snaa doo daa daa daa nee.
-		 */
-	  `,
+    /**
+     * @see Derp skoobadee skoobadaai skoo skeeba fazskooob snaadoo doo daa daa daa nee
+     * nerf snoo skeebabadoo snaa doo daa daa daa nee.
+     */
+    `,
   ));

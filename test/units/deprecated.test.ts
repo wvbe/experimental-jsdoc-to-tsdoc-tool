@@ -69,8 +69,8 @@ Deno.test("@deprecated with a long description across several lines", () =>
     `,
     tsdoc`
       /**
-       * @deprecated This contend is deprecated it is very deprecated please don't
-       * use it or you will be fired.
+       * @deprecated This contend is deprecated it is very deprecated please don't use it
+       * or you will be fired.
        */
     `,
   ));
