@@ -9,7 +9,7 @@ export function getVirtualTags(specs: Spec[]) {
   return serializeTag(specs, "abstract", { tsdocTagName: "virtual" });
 }
 export function getConstTags(specs: Spec[]) {
-  return serializeTag(specs, "const");
+  return serializeTag(specs, "const", { includeTypeInfo: true });
 }
 
 export function getDeprecatedTags(specs: Spec[]) {
@@ -39,7 +39,7 @@ export function getExampleTags(specs: Spec[]) {
 }
 
 export function getHideconstructorTags(specs: Spec[]) {
-  return serializeTag(specs, "hideconstructor", { tsdocTagName: "internal" });
+  return serializeTag(specs, "hideconstructor");
 }
 
 export function getInternalTags(specs: Spec[]) {
