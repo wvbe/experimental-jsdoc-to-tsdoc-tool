@@ -7,6 +7,7 @@ export function serializeTag(
   specs: Spec[],
   jsdocTagName: string,
   options: {
+    includeTypeInfo?: boolean;
     dataOnNextLine?: boolean;
     omitWhenEmpty?: boolean;
     tsdocTagName?: string;
@@ -24,7 +25,7 @@ export function serializeTag(
     ? tags.reduce<string[]>(
       (lines, tag) =>
         lines.concat([
-          `@${tsdocTagName}`,
+          `@${tsdocTagName}${options.includeTypeInfo ? ` {${tag.type}}` : ""}`,
           ...getMarkdownColumnLines(`${tag.name} ${tag.description}`, 80, [""]),
         ]),
       [],
@@ -33,8 +34,9 @@ export function serializeTag(
       (lines, tag) =>
         lines.concat(
           getMarkdownColumnLines(
-            `@${tsdocTagName} ${tag.name.trim()} ${tag.description.trim()}`
-              .trim(),
+            `@${tsdocTagName}${
+              options.includeTypeInfo ? ` {${tag.type}}` : ""
+            } ${tag.name.trim()} ${tag.description.trim()}`.trim(),
             80,
             [""],
           ),
