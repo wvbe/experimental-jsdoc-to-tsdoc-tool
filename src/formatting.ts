@@ -93,7 +93,10 @@ export function getMarkdownColumnLines(
     }, []);
 }
 
-export function formatMarkdown(md: string, prettierOptions?: any): string {
+export function formatMarkdown(
+  md: string,
+  prettierOptions?: prettier.Options,
+): string {
   return prettier
     .format(md, {
       plugins: [markdownParser],
