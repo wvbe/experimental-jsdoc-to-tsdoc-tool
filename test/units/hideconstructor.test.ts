@@ -9,8 +9,5 @@ Deno.test("@hideconstructor", () =>
        */
     `,
     tsdoc`
-      /**
-       * @hideconstructor
-       */
     `,
   ));

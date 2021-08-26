@@ -21,12 +21,18 @@ export function serializeTag(
 
   const tsdocTagName = options.tsdocTagName || jsdocTagName;
 
+  if (tsdocTagName === "hideconstructor") {
+    return ``;
+  }
+
   return options.dataOnNextLine
     ? tags.reduce<string[]>(
       (lines, tag) =>
         lines.concat([
           `@${tsdocTagName}${options.includeTypeInfo ? ` {${tag.type}}` : ""}`,
-          ...getMarkdownColumnLines(`${tag.name} ${tag.description}`, 80, [""]),
+          ...getMarkdownColumnLines(`${tag.name} ${tag.description}`, 80, [
+            "",
+          ]),
         ]),
       [],
     )
@@ -71,7 +77,8 @@ export function getMarkdownColumnLines(
       );
 
       if (
-        skipHangingPrefixes || prefixes.length <= all.length ||
+        skipHangingPrefixes ||
+        prefixes.length <= all.length ||
         i < all.length - 1
       ) {
         return tsdocLines;
