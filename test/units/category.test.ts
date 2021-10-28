@@ -8,11 +8,7 @@ Deno.test("@category", () =>
        * @category
        */
     `,
-    tsdoc`
-      /**
-       * @category
-       */
-    `,
+    tsdoc``,
   ));
 
 Deno.test("@category and description", () =>
@@ -22,9 +18,5 @@ Deno.test("@category and description", () =>
        * @category configuration/experiment
        */
     `,
-    tsdoc`
-      /**
-       * @category configuration/experiment
-       */
-    `,
+    tsdoc``,
   ));

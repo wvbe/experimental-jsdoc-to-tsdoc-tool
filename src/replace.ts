@@ -40,7 +40,6 @@ export function getTsdocStringForJsdocAst(ast: Block): string {
       // Then some TSdoc about the API status
       ...getDeprecatedTags(ast.tags),
       ...serializeTag(ast.tags, "fontosdk"),
-      ...serializeTag(ast.tags, "category"),
       ...getInternalTags(ast.tags),
     ],
     [
