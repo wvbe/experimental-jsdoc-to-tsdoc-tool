@@ -25,8 +25,8 @@ Deno.test("@see, with a long description", () =>
     `,
     tsdoc`
     /**
-     * @see Derp skoobadee skoobadaai skoo skeeba fazskooob snaadoo doo daa daa daa nee
-     * nerf snoo skeebabadoo snaa doo daa daa daa nee.
+     * @see Derp skoobadee skoobadaai skoo skeeba fazskooob snaadoo doo daa daa daa nee nerf snoo
+     * skeebabadoo snaa doo daa daa daa nee.
      */
     `,
   ));

@@ -1,6 +1,7 @@
 import { Spec } from "https://esm.sh/comment-parser";
 import * as prettier from "https://esm.sh/prettier";
 import markdownParser from "https://esm.sh/prettier/parser-markdown";
+import { MAX_CHARACTER_WIDTH } from "./constants.ts";
 
 // Adopt, without changes, any custom block tag
 export function serializeTag(
@@ -30,9 +31,13 @@ export function serializeTag(
       (lines, tag) =>
         lines.concat([
           `@${tsdocTagName}${options.includeTypeInfo ? ` {${tag.type}}` : ""}`,
-          ...getMarkdownColumnLines(`${tag.name} ${tag.description}`, 80, [
-            "",
-          ]),
+          ...getMarkdownColumnLines(
+            `${tag.name} ${tag.description}`,
+            MAX_CHARACTER_WIDTH,
+            [
+              "",
+            ],
+          ),
         ]),
       [],
     )
@@ -43,7 +48,7 @@ export function serializeTag(
             `@${tsdocTagName}${
               options.includeTypeInfo ? ` {${tag.type}}` : ""
             } ${tag.name.trim()} ${tag.description.trim()}`.trim(),
-            80,
+            MAX_CHARACTER_WIDTH,
             [""],
           ),
         ),

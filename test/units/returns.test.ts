@@ -61,8 +61,8 @@ Deno.test("@returns, with a long description", () =>
     `,
     tsdoc`
       /**
-       * @returns Derp skoobadee skoobadaai skoo skeeba fazskooob snaadoo doo daa daa daa
-       * nee nerf snoo skeebabadoo snaa doo daa daa daa nee.
+       * @returns Derp skoobadee skoobadaai skoo skeeba fazskooob snaadoo doo daa daa daa nee nerf snoo
+       * skeebabadoo snaa doo daa daa daa nee.
        */
     `,
   ));

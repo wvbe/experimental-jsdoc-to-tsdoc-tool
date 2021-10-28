@@ -38,7 +38,7 @@ jobs:
       #   run: deno fmt --check
 
       - name: Run linter
-        run: deno lint
+        run: deno lint --ignore=test/files/getNodeId.in.js,test/files/getNodeId.out.js
 
       - name: Run tests
         run: deno test --allow-read

@@ -1,4 +1,6 @@
 import { Spec } from "https://esm.sh/comment-parser";
+import { MAX_CHARACTER_WIDTH } from "./constants.ts";
+
 import {
   formatMarkdown,
   getMarkdownColumnLines,
@@ -75,7 +77,7 @@ export function getParamTags(specs: Spec[]) {
     return lines.concat(
       getMarkdownColumnLines(
         param.description,
-        80,
+        MAX_CHARACTER_WIDTH,
         [prefix, " ".repeat(prefix.length)],
         undefined,
         true,
