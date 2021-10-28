@@ -10,6 +10,7 @@ Deno.test("@link", () =>
     `,
     tsdoc`
       /**
+       * @remarks
        * {@link https://www.google.com}
        */
     `,
@@ -24,6 +25,7 @@ Deno.test("Description and @link", () =>
     `,
     tsdoc`
       /**
+       * @remarks
        * This is a description with a {@link https://www.google.com}
        */
     `,

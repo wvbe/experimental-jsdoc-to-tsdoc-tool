@@ -1,4 +1,5 @@
 /**
+ * @remarks
  * A nodeId is the unique identifier for a node.
  *
  * Note that this ID has no relation with any id attribute and it is not stable
@@ -23,6 +24,7 @@ function setNodeId(node) {
 }
 
 /**
+ * @remarks
  * Get the existing node ID for the given node or generate a new one if none has
  * been set
  *

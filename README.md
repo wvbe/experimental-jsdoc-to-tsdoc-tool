@@ -21,7 +21,6 @@ jsdoc-to-tsdoc --in my-file.js --out my-file.js
 jsdoc-to-tsdoc --update-in-place --in my-file.js
 jsdoc-to-tsdoc --update-in-place --glob "**/*.{js,jsx,ts,tsx}"
 
-
 # Run unit tests:
 deno test --allow-read
 ```

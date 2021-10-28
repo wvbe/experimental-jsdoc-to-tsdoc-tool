@@ -10,6 +10,7 @@ Deno.test("Description, simple", () =>
     `,
     tsdoc`
       /**
+       * @remarks
        * Test 1
        */
     `,
@@ -26,6 +27,7 @@ Deno.test("Description, two paragraphs", () =>
     `,
     tsdoc`
       /**
+       * @remarks
        * Paragraph 1
        *
        * Paragraph 2
@@ -44,6 +46,7 @@ Deno.test("Description, long and line-wrapping", () =>
     `,
     tsdoc`
       /**
+       * @remarks
        * This description with some really long lines. This description with some really
        * long lines. This description with some really long lines. This description with
        * some really long lines. This description with some really weird wrapping.
@@ -60,6 +63,7 @@ Deno.test("@description on one line", () =>
     `,
     tsdoc`
       /**
+       * @remarks
        * This is a description.
        */
     `,
@@ -75,6 +79,7 @@ Deno.test("@description on two lines", () =>
       `,
     tsdoc`
         /**
+         * @remarks
          * This is a description.
          */
       `,
@@ -90,6 +95,7 @@ Deno.test("@description on the next line line", () =>
       `,
     tsdoc`
         /**
+         * @remarks
          * This is a description.
          */
       `,
@@ -110,6 +116,7 @@ Deno.test("Description and @description", () =>
         `,
     tsdoc`
           /**
+           * @remarks
            * This is the first description
            *
            * More parts of the first description

@@ -115,6 +115,9 @@ export function getDescriptionAndRemarksTag(
   specs: Spec[],
 ) {
   const summary = specs.find((spec) => spec.tag === "summary");
+  const summaryText = formatMarkdown(
+    `${summary?.name || ""} ${summary?.description || ""}`.trim(),
+  ).trimEnd();
 
   // In case a JSDoc description as well as @description are given, join them with newlines;
   const combinedDescription = specs
@@ -123,16 +126,18 @@ export function getDescriptionAndRemarksTag(
       (desc, spec) =>
         desc + "\n\n" + formatMarkdown(spec.name + " " + spec.description),
       formatMarkdown(description),
-    )
-    .trim();
+    ).trim();
 
-  return [
-    `${summary?.name || ""} ${summary?.description || ""}`,
-    summary && combinedDescription
-      ? "\n@remarks\n" + combinedDescription
-      : combinedDescription,
-  ]
-    .map((text) => text.trimEnd())
-    .filter(Boolean)
-    .reduce<string[]>((lines, text) => lines.concat(text.split("\n")), []);
+  const lines = [];
+  if (summaryText) {
+    lines.push(...summaryText.split("\n"));
+  }
+  if (summaryText && combinedDescription) {
+    lines.push("");
+  }
+  if (combinedDescription) {
+    lines.push("@remarks", ...combinedDescription.split("\n"));
+  }
+
+  return lines;
 }
