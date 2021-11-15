@@ -84,7 +84,7 @@ Deno.test("@deprecated including a link", () =>
     `,
     tsdoc`
       /**
-       * @deprecated This contend is deprecated, see {@link this one}.
+       * @deprecated This contend is deprecated, see {@link this | one}.
        */
     `,
   ));

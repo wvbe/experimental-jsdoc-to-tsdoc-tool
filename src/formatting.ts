@@ -34,9 +34,7 @@ export function serializeTag(
           ...getMarkdownColumnLines(
             `${tag.name} ${tag.description}`,
             MAX_CHARACTER_WIDTH,
-            [
-              "",
-            ],
+            [""],
           ),
         ]),
       [],
@@ -82,8 +80,7 @@ export function getMarkdownColumnLines(
       );
 
       if (
-        skipHangingPrefixes ||
-        prefixes.length <= all.length ||
+        skipHangingPrefixes || prefixes.length <= all.length ||
         i < all.length - 1
       ) {
         return tsdocLines;
@@ -109,12 +106,29 @@ export function formatMarkdown(
   md: string,
   prettierOptions?: prettier.Options,
 ): string {
+  const pattern =
+    // Regex pattern for {@link} with...
+    // - Any type and amount of spacing after @link
+    // - Any string containing exclusively URL-allowed characters. No requirement to start with a protocol.
+    // - Followed by any amount of any space or pipes
+    // - Followed by any characters that is not the @link closing character "}"
+    //
+    // See also link-text.test.ts
+    /{@link\s+([a-zA-Z0-9\-_~:\/\?\#\[\]\@\!\$\&\'\(\)\*\+\,\.\;\=]+)[\s\|]+([^}]+)}/gm;
+
   return prettier
-    .format(md, {
-      plugins: [markdownParser],
-      parser: "markdown",
-      proseWrap: "always",
-      ...prettierOptions,
-    })
+    .format(
+      Array.from(md.matchAll(pattern)).reduce(
+        (last, [group, url, text]) =>
+          last.replace(group, `{@link ${url} | ${text}}`),
+        md,
+      ) || md,
+      {
+        plugins: [markdownParser],
+        parser: "markdown",
+        proseWrap: "always",
+        ...prettierOptions,
+      },
+    )
     .trim();
 }
