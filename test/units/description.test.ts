@@ -165,3 +165,17 @@ Deno.test("@summary only", () =>
            */
         `,
   ));
+
+Deno.test("@inheritDoc only", () =>
+  assertEquals(
+    jsdoc`
+          /**
+           * {@inheritDoc blaat}
+           */
+        `,
+    tsdoc`
+          /**
+           * {@inheritDoc blaat}
+           */
+        `,
+  ));

@@ -140,7 +140,11 @@ export function getDescriptionAndRemarksTag(
     lines.push("");
   }
   if (combinedDescription) {
-    lines.push("@remarks", ...combinedDescription.split("\n"));
+    if (combinedDescription.trim().match(/^{@inheritDoc [^\}]+\}$/g)) {
+      lines.push(...combinedDescription.split("\n"));
+    } else {
+      lines.push("@remarks", ...combinedDescription.split("\n"));
+    }
   }
 
   return lines;
