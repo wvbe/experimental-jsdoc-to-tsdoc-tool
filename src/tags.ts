@@ -72,10 +72,8 @@ export function getParamTags(specs: Spec[]) {
     0,
   );
   return params.reduce<string[]>((lines, param) => {
-    const prefix = `@param ${
-      param.name +
-      " ".repeat(maxNameLength - param.name.length)
-    } - `;
+    const prefix = `@param ${param.name +
+      " ".repeat(maxNameLength - param.name.length)} - `;
     return lines.concat(
       getMarkdownColumnLines(
         param.description,

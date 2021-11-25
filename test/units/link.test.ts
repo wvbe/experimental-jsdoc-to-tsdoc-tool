@@ -44,3 +44,18 @@ Deno.test("@param and @link", () =>
        */
     `,
   ));
+
+Deno.test("@link referencing object properties", () =>
+  assertEquals(
+    jsdoc`
+      /**
+       * {@link ConfigurationValueTypes."configuration-manager-value"}
+       */
+    `,
+    tsdoc`
+      /**
+       * @remarks
+       * {@link ConfigurationValueTypes."configuration-manager-value"}
+       */
+    `,
+  ));

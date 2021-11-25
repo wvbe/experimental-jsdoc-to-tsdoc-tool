@@ -1,5 +1,5 @@
 import { Spec } from "https://esm.sh/comment-parser";
-import * as prettier from "https://esm.sh/prettier";
+import prettier from "https://esm.sh/prettier";
 import markdownParser from "https://esm.sh/prettier/parser-markdown";
 import { MAX_CHARACTER_WIDTH } from "./constants.ts";
 
@@ -80,7 +80,8 @@ export function getMarkdownColumnLines(
       );
 
       if (
-        skipHangingPrefixes || prefixes.length <= all.length ||
+        skipHangingPrefixes ||
+        prefixes.length <= all.length ||
         i < all.length - 1
       ) {
         return tsdocLines;
