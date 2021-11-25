@@ -7,7 +7,7 @@ import {
   dirname,
   fromFileUrl,
   join,
-} from "https://deno.land/std@0.99.0/path/mod.ts";
+} from "https://deno.land/std@0.116.0/path/mod.ts";
 
 export function jsdoc(strs: TemplateStringsArray) {
   const asts = getJsdocAstsForFileContents(strs.join("").trimEnd());

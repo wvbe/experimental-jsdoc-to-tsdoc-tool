@@ -1,109 +1,115 @@
-import { assertEquals } from "https://deno.land/std@0.99.0/testing/asserts.ts";
-import { jsdoc, tsdoc } from "../util.ts";
+import { assertEquals } from 'https://deno.land/std@0.116.0/testing/asserts.ts';
+import { jsdoc, tsdoc } from '../util.ts';
 
-Deno.test("Description, simple", () =>
-  assertEquals(
-    jsdoc`
+Deno.test('Description, simple', () =>
+	assertEquals(
+		jsdoc`
       /**
        * Test 1
        */
     `,
-    tsdoc`
+		tsdoc`
       /**
        * @remarks
        * Test 1
        */
-    `,
-  ));
+    `
+	)
+);
 
-Deno.test("Description, two paragraphs", () =>
-  assertEquals(
-    jsdoc`
+Deno.test('Description, two paragraphs', () =>
+	assertEquals(
+		jsdoc`
       /**
        * Paragraph 1
        *
        * Paragraph 2
        */
     `,
-    tsdoc`
+		tsdoc`
       /**
        * @remarks
        * Paragraph 1
        *
        * Paragraph 2
        */
-    `,
-  ));
+    `
+	)
+);
 
-Deno.test("Description, long and line-wrapping", () =>
-  assertEquals(
-    jsdoc`
+Deno.test('Description, long and line-wrapping', () =>
+	assertEquals(
+		jsdoc`
       /**
        * This description with some really long lines. This description with some really long lines. This description with some really long lines. This description with some really
        * long lines. This description
        * with some really weird wrapping.
        */
     `,
-    tsdoc`
+		tsdoc`
       /**
        * @remarks
        * This description with some really long lines. This description with some really
        * long lines. This description with some really long lines. This description with
        * some really long lines. This description with some really weird wrapping.
        */
-    `,
-  ));
+    `
+	)
+);
 
-Deno.test("@description on one line", () =>
-  assertEquals(
-    jsdoc`
+Deno.test('@description on one line', () =>
+	assertEquals(
+		jsdoc`
       /**
        * @description This is a description.
        */
     `,
-    tsdoc`
+		tsdoc`
       /**
        * @remarks
        * This is a description.
        */
-    `,
-  ));
+    `
+	)
+);
 
-Deno.test("@description on two lines", () =>
-  assertEquals(
-    jsdoc`
+Deno.test('@description on two lines', () =>
+	assertEquals(
+		jsdoc`
         /**
          * @description This is
          * a description.
          */
       `,
-    tsdoc`
+		tsdoc`
         /**
          * @remarks
          * This is a description.
          */
-      `,
-  ));
+      `
+	)
+);
 
-Deno.test("@description on the next line line", () =>
-  assertEquals(
-    jsdoc`
+Deno.test('@description on the next line line', () =>
+	assertEquals(
+		jsdoc`
         /**
          * @description
          * This is a description.
          */
       `,
-    tsdoc`
+		tsdoc`
         /**
          * @remarks
          * This is a description.
          */
-      `,
-  ));
+      `
+	)
+);
 
-Deno.test("Description and @description", () =>
-  assertEquals(
-    jsdoc`
+Deno.test('Description and @description', () =>
+	assertEquals(
+		jsdoc`
           /**
            * This is the first description
            *
@@ -114,7 +120,7 @@ Deno.test("Description and @description", () =>
            * @description This is the third description
            */
         `,
-    tsdoc`
+		tsdoc`
           /**
            * @remarks
            * This is the first description
@@ -127,12 +133,13 @@ Deno.test("Description and @description", () =>
            *
            * This is the third description
            */
-        `,
-  ));
+        `
+	)
+);
 
-Deno.test("Description and @summary", () =>
-  assertEquals(
-    jsdoc`
+Deno.test('Description and @summary', () =>
+	assertEquals(
+		jsdoc`
           /**
            * This is the first description
            *
@@ -141,7 +148,7 @@ Deno.test("Description and @summary", () =>
            * @description This is the second description
            */
         `,
-    tsdoc`
+		tsdoc`
           /**
            * This is the summary
            *
@@ -150,32 +157,35 @@ Deno.test("Description and @summary", () =>
            *
            * This is the second description
            */
-        `,
-  ));
-Deno.test("@summary only", () =>
-  assertEquals(
-    jsdoc`
+        `
+	)
+);
+Deno.test('@summary only', () =>
+	assertEquals(
+		jsdoc`
           /**
            * @summary This is the summary
            */
         `,
-    tsdoc`
+		tsdoc`
           /**
            * This is the summary
            */
-        `,
-  ));
+        `
+	)
+);
 
-Deno.test("@inheritDoc only", () =>
-  assertEquals(
-    jsdoc`
+Deno.test('@inheritDoc only', () =>
+	assertEquals(
+		jsdoc`
           /**
            * {@inheritDoc blaat}
            */
         `,
-    tsdoc`
+		tsdoc`
           /**
            * {@inheritDoc blaat}
            */
-        `,
-  ));
+        `
+	)
+);

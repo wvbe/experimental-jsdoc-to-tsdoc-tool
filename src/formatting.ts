@@ -1,6 +1,6 @@
-import { Spec } from "https://esm.sh/comment-parser";
-import prettier from "https://esm.sh/prettier";
-import markdownParser from "https://esm.sh/prettier/parser-markdown";
+import { Spec } from "https://esm.sh/comment-parser@1.3.0";
+import prettier from "https://esm.sh/prettier@2.5.0";
+import markdownParser from "https://esm.sh/prettier@2.5.0/parser-markdown";
 import { MAX_CHARACTER_WIDTH } from "./constants.ts";
 
 // Adopt, without changes, any custom block tag

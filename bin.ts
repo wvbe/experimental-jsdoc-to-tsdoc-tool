@@ -1,5 +1,5 @@
 import { replaceJsdocWithTsdoc } from "./src/replace.ts";
-import { expandGlob } from "https://deno.land/std@0.99.0/fs/mod.ts";
+import { expandGlob } from "https://deno.land/std@0.116.0/fs/mod.ts";
 
 export async function globFilesWithJsdoc(pattern: string) {
   const files: string[] = [];

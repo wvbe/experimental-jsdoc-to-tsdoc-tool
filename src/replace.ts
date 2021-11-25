@@ -1,5 +1,5 @@
-import { Block, parse } from "https://esm.sh/comment-parser";
-import * as Colors from "https://deno.land/std@0.99.0/fmt/colors.ts";
+import { Block, parse } from "https://esm.sh/comment-parser@1.3.0";
+import * as Colors from "https://deno.land/std@0.116.0/fmt/colors.ts";
 import { serializeTag } from "./formatting.ts";
 import {
   getConstTags,

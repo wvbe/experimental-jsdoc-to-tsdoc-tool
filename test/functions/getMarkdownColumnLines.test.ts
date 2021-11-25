@@ -1,5 +1,5 @@
 import { getMarkdownColumnLines } from "../../src/formatting.ts";
-import { assertEquals } from "https://deno.land/std@0.99.0/testing/asserts.ts";
+import { assertEquals } from "https://deno.land/std@0.116.0/testing/asserts.ts";
 
 const MEDIUM_LENGTH = `
 Erebor became the home of the Folk of Durin, a clan of Dwarves known as the Longbeards, after they were driven from their ancestral home of Khazad-dûm. In the latter days of the Third Age, this Kingdom under the Mountain held one of the largest dwarvish treasure hoards in Middle-earth.

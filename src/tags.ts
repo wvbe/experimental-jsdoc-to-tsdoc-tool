@@ -1,4 +1,4 @@
-import { Spec } from "https://esm.sh/comment-parser";
+import { Spec } from "https://esm.sh/comment-parser@1.3.0";
 import { MAX_CHARACTER_WIDTH } from "./constants.ts";
 
 import {
