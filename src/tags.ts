@@ -10,6 +10,18 @@ import {
 export function getVirtualTags(specs: Spec[]) {
   return serializeTag(specs, "abstract", { tsdocTagName: "virtual" });
 }
+
+export function getCategoryTags(specs: Spec[]) {
+  const categoryTag = specs.filter((spec) => spec.tag === "category");
+  const allowedCategories = ['family/cvk', 'fds/components', 'fds/system', 'widget'];
+
+  if (categoryTag[0] && categoryTag[0].name && allowedCategories.includes(categoryTag[0].name)) {
+    return serializeTag(specs, "category");
+  } else {
+    return []
+  }
+}
+
 export function getConstTags(specs: Spec[]) {
   return serializeTag(specs, "const", { includeTypeInfo: true });
 }

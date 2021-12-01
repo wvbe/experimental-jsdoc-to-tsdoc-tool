@@ -53,7 +53,7 @@ while (i < Deno.args.length) {
     case "-o":
     case "--out":
       options.outputFile = Deno.args[i++];
-      if (!options.globbingPattern) {
+      if (!options.outputFile) {
         throw new Error("Output file cannot be empty");
       }
       continue;
