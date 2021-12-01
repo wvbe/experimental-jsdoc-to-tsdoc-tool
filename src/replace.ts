@@ -2,6 +2,7 @@ import { Block, parse } from "https://esm.sh/comment-parser@1.3.0";
 import * as Colors from "https://deno.land/std@0.116.0/fmt/colors.ts";
 import { serializeTag } from "./formatting.ts";
 import {
+  getCategoryTags,
   getConstTags,
   getDeprecatedTags,
   getDescriptionAndRemarksTag,
@@ -44,6 +45,7 @@ export function getTsdocStringForJsdocAst(ast: Block): string {
     ],
     [
       // Then the API shape itself
+      ...getCategoryTags(ast.tags),
       ...getConstTags(ast.tags),
       ...getDoctypeTags(ast.tags),
       ...getExampleTags(ast.tags),
