@@ -13,7 +13,7 @@ export function getVirtualTags(specs: Spec[]) {
 
 export function getCategoryTags(specs: Spec[]) {
   const categoryTag = specs.filter((spec) => spec.tag === "category");
-  const allowedCategories = ['family/cvk', 'fds/components', 'fds/system', 'widget'];
+  const allowedCategories = ['family/cvk', 'fds/components', 'fds/system', 'widget', 'manager'];
 
   if (categoryTag[0] && categoryTag[0].name && allowedCategories.includes(categoryTag[0].name)) {
     return serializeTag(specs, "category");

@@ -77,3 +77,17 @@ Deno.test("@category family/cvk", () =>
        */
     `,
   ));
+
+  Deno.test("@category manager", () =>
+  assertEquals(
+    jsdoc`
+      /**
+       * @category manager
+       */
+    `,
+    tsdoc`
+      /**
+       * @category manager
+       */
+    `,
+  ));
