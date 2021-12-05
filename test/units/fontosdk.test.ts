@@ -15,7 +15,7 @@ Deno.test("@fontosdk", () =>
     `,
   ));
 
-Deno.test("@fontosdk and members", () =>
+Deno.test("@fontosdk members", () =>
   assertEquals(
     jsdoc`
       /**
@@ -24,7 +24,33 @@ Deno.test("@fontosdk and members", () =>
     `,
     tsdoc`
       /**
-       * @fontosdk members
+       * @fontosdk
        */
     `,
   ));
+Deno.test("@fontosdk members", () => {
+  assertEquals(
+    jsdoc`
+      /**
+       * @fontosdk importable
+       */
+    `,
+    tsdoc`
+      /**
+       * @fontosdk importable
+       */
+    `,
+  );
+  assertEquals(
+    jsdoc`
+      /**
+       * @fontosdk    weg  wer  importable  wrg ehtr
+       */
+    `,
+    tsdoc`
+      /**
+       * @fontosdk importable
+       */
+    `,
+  );
+});

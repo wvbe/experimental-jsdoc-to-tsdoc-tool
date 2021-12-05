@@ -12,8 +12,14 @@ export function serializeTag(
     dataOnNextLine?: boolean;
     omitWhenEmpty?: boolean;
     tsdocTagName?: string;
+    /**
+     * Transform the contents of a tag before serializing. Return null to abort serializing tag
+	 * altogether.
+     */
+    transformLine?: (line: string) => string | null;
   } = {},
 ) {
+  const transformLine = options.transformLine || ((x: string) => x);
   const tags = specs.filter(
     (spec) =>
       spec.tag === jsdocTagName &&
@@ -27,31 +33,36 @@ export function serializeTag(
   }
 
   return options.dataOnNextLine
-    ? tags.reduce<string[]>(
-      (lines, tag) =>
-        lines.concat([
-          `@${tsdocTagName}${options.includeTypeInfo ? ` {${tag.type}}` : ""}`,
-          ...getMarkdownColumnLines(
-            `${tag.name} ${tag.description}`,
-            MAX_CHARACTER_WIDTH,
-            [""],
-          ),
-        ]),
-      [],
-    )
-    : tags.reduce<string[]>(
-      (lines, tag) =>
-        lines.concat(
-          getMarkdownColumnLines(
-            `@${tsdocTagName}${
-              options.includeTypeInfo ? ` {${tag.type}}` : ""
-            } ${tag.name.trim()} ${tag.description.trim()}`.trim(),
-            MAX_CHARACTER_WIDTH,
-            [""],
-          ),
+    ? tags.reduce<string[]>((lines, tag) => {
+      const content = transformLine(
+        `${tag.name.trim()} ${tag.description.trim()}`.trim(),
+      );
+      if (content === null) {
+        return lines;
+      }
+      return lines.concat([
+        `@${tsdocTagName}${options.includeTypeInfo ? ` {${tag.type}}` : ""}`,
+        ...getMarkdownColumnLines(content, MAX_CHARACTER_WIDTH, [""]),
+      ]);
+    }, [])
+    : tags.reduce<string[]>((lines, tag) => {
+      const content = transformLine(
+        `${tag.name.trim()} ${tag.description.trim()}`.trim(),
+      );
+
+      if (content === null) {
+        return lines;
+      }
+      return lines.concat(
+        getMarkdownColumnLines(
+          `@${tsdocTagName}${
+            options.includeTypeInfo ? ` {${tag.type}}` : ""
+          } ${content}`.trim(),
+          MAX_CHARACTER_WIDTH,
+          [""],
         ),
-      [],
-    );
+      );
+    }, []);
 }
 
 export function getMarkdownColumnLines(
@@ -80,8 +91,7 @@ export function getMarkdownColumnLines(
       );
 
       if (
-        skipHangingPrefixes ||
-        prefixes.length <= all.length ||
+        skipHangingPrefixes || prefixes.length <= all.length ||
         i < all.length - 1
       ) {
         return tsdocLines;

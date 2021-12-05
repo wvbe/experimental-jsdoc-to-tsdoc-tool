@@ -35,8 +35,7 @@ Deno.test("@category family/cvk", () =>
     `,
   ));
 
-
-  Deno.test("@category fds/components", () =>
+Deno.test("@category fds/components", () =>
   assertEquals(
     jsdoc`
       /**
@@ -50,7 +49,7 @@ Deno.test("@category family/cvk", () =>
     `,
   ));
 
-  Deno.test("@category fds/system", () =>
+Deno.test("@category fds/system", () =>
   assertEquals(
     jsdoc`
       /**
@@ -64,7 +63,7 @@ Deno.test("@category family/cvk", () =>
     `,
   ));
 
-  Deno.test("@category widget", () =>
+Deno.test("@category widget", () =>
   assertEquals(
     jsdoc`
       /**
@@ -78,7 +77,7 @@ Deno.test("@category family/cvk", () =>
     `,
   ));
 
-  Deno.test("@category manager", () =>
+Deno.test("@category manager", () =>
   assertEquals(
     jsdoc`
       /**

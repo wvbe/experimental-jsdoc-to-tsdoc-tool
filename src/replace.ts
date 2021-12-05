@@ -2,7 +2,6 @@ import { Block, parse } from "https://esm.sh/comment-parser@1.3.0";
 import * as Colors from "https://deno.land/std@0.116.0/fmt/colors.ts";
 import { serializeTag } from "./formatting.ts";
 import {
-  getCategoryTags,
   getConstTags,
   getDeprecatedTags,
   getDescriptionAndRemarksTag,
@@ -40,12 +39,27 @@ export function getTsdocStringForJsdocAst(ast: Block): string {
     [
       // Then some TSdoc about the API status
       ...getDeprecatedTags(ast.tags),
-      ...serializeTag(ast.tags, "fontosdk"),
+      ...serializeTag(ast.tags, "fontosdk", {
+        // Leave only `@fontosdk importable` in place, drop all other suffixes
+        transformLine: (line: string) =>
+          line.split(/\s+/).filter((tag) => tag === "importable").join(" "),
+      }),
       ...getInternalTags(ast.tags),
     ],
     [
       // Then the API shape itself
-      ...getCategoryTags(ast.tags),
+      ...serializeTag(ast.tags, "category", {
+        transformLine: (category: string) =>
+          [
+              "family/cvk",
+              "fds/components",
+              "fds/system",
+              "widget",
+              "manager",
+            ].includes(category)
+            ? category
+            : null,
+      }),
       ...getConstTags(ast.tags),
       ...getDoctypeTags(ast.tags),
       ...getExampleTags(ast.tags),
