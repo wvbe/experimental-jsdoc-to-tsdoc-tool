@@ -16,6 +16,21 @@ Deno.test("@see", () =>
        */
     `,
   ));
+
+Deno.test("@see", () =>
+  assertEquals(
+    jsdoc`
+      /**
+       * @see SomeAPI
+       */
+      `,
+    tsdoc`
+      /**
+       * @see {@link SomeAPI}
+       */
+      `,
+  ));
+
 Deno.test("@see, with a long description", () =>
   assertEquals(
     jsdoc`

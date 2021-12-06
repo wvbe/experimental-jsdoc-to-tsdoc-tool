@@ -63,7 +63,14 @@ export function getReturnsTags(specs: Spec[]) {
 }
 
 export function getSeeTags(specs: Spec[]) {
-  return serializeTag(specs, "see");
+  return serializeTag(specs, "see", {
+    transformLine: (x: string) => {
+      if (x.match(/\s/)) {
+        return x;
+      }
+      return `{@link ${x}}`;
+    },
+  });
 }
 
 export function getParamTags(specs: Spec[]) {
