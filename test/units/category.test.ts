@@ -30,7 +30,7 @@ Deno.test("@category family/cvk", () =>
     `,
     tsdoc`
       /**
-       * @category family/cvk
+       * @category CVK families
        */
     `,
   ));
@@ -44,7 +44,7 @@ Deno.test("@category fds/components", () =>
     `,
     tsdoc`
       /**
-       * @category fds/components
+       * @category Design system components
        */
     `,
   ));
@@ -58,7 +58,7 @@ Deno.test("@category fds/system", () =>
     `,
     tsdoc`
       /**
-       * @category fds/system
+       * @category Design system utilities
        */
     `,
   ));
@@ -72,7 +72,7 @@ Deno.test("@category widget", () =>
     `,
     tsdoc`
       /**
-       * @category widget
+       * @category CVK widgets
        */
     `,
   ));
@@ -86,7 +86,7 @@ Deno.test("@category manager", () =>
     `,
     tsdoc`
       /**
-       * @category manager
+       * @category Managers
        */
     `,
   ));

@@ -8,9 +8,5 @@ Deno.test("@const", () =>
        * @const {boolean} nerf
        */
     `,
-    tsdoc`
-      /**
-       * @const {boolean} nerf
-       */
-    `,
+    tsdoc``,
   ));

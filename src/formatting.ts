@@ -14,7 +14,7 @@ export function serializeTag(
     tsdocTagName?: string;
     /**
      * Transform the contents of a tag before serializing. Return null to abort serializing tag
-	 * altogether.
+     * altogether.
      */
     transformLine?: (line: string) => string | null;
   } = {},

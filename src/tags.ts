@@ -11,16 +11,8 @@ export function getVirtualTags(specs: Spec[]) {
   return serializeTag(specs, "abstract", { tsdocTagName: "virtual" });
 }
 
-export function getConstTags(specs: Spec[]) {
-  return serializeTag(specs, "const", { includeTypeInfo: true });
-}
-
 export function getDeprecatedTags(specs: Spec[]) {
   return serializeTag(specs, "deprecated");
-}
-
-export function getDoctypeTags(specs: Spec[]) {
-  return serializeTag(specs, "doctype");
 }
 
 export function getExampleTags(specs: Spec[]) {
@@ -39,10 +31,6 @@ export function getExampleTags(specs: Spec[]) {
 
     return lines.concat([`@example`, ...formatMarkdown(text).split("\n")]);
   }, []);
-}
-
-export function getHideconstructorTags(specs: Spec[]) {
-  return serializeTag(specs, "hideconstructor");
 }
 
 export function getInternalTags(specs: Spec[]) {

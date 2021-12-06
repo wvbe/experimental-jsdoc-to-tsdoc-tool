@@ -9,8 +9,5 @@ Deno.test("@doctype", () =>
        */
     `,
     tsdoc`
-      /**
-       * @doctype nerf
-       */
     `,
   ));

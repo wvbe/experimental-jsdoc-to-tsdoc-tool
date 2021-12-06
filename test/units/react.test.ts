@@ -8,9 +8,5 @@ Deno.test("@react", () =>
        * @react
        */
     `,
-    tsdoc`
-      /**
-       * @react
-       */
-    `,
+    tsdoc``,
   ));

@@ -8,9 +8,5 @@ Deno.test("@type", () =>
        * @type {FDS~Sometype}
        */
     `,
-    tsdoc`
-      /**
-       * @type {FDS~Sometype}
-       */
-    `,
+    tsdoc``,
   ));

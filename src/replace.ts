@@ -2,25 +2,28 @@ import { Block, parse } from "https://esm.sh/comment-parser@1.3.0";
 import * as Colors from "https://deno.land/std@0.116.0/fmt/colors.ts";
 import { serializeTag } from "./formatting.ts";
 import {
-  getConstTags,
   getDeprecatedTags,
   getDescriptionAndRemarksTag,
-  getDoctypeTags,
   getExampleTags,
-  getHideconstructorTags,
   getInternalTags,
   getParamTags,
-  getReactTags,
   getReturnsTags,
   getSeeTags,
   getThrowsTags,
-  getTypeTags,
   getVirtualTags,
 } from "./tags.ts";
 
 export function getJsdocAstsForFileContents(fileContents: string): Block[] {
   return parse(fileContents, { spacing: "preserve" });
 }
+
+const fancyCategoryNames: { [legacy: string]: string } = {
+  "family/cvk": "CVK families",
+  "fds/components": "Design system components",
+  "fds/system": "Design system utilities",
+  "widget": "CVK widgets",
+  "manager": "Managers",
+};
 
 export function getTsdocStringForJsdocAst(ast: Block): string {
   const tab = ast.source[0].tokens.start;
@@ -30,58 +33,52 @@ export function getTsdocStringForJsdocAst(ast: Block): string {
   const innerDoclet = [
     [
       // The summary, description, and more information go at the top
-      ...getDescriptionAndRemarksTag(
-        ast.description,
-        ast.tags,
-      ),
-      ...getSeeTags(ast.tags),
+      ...getDescriptionAndRemarksTag(ast.description, ast.tags),
     ],
+    [...getExampleTags(ast.tags)],
+    [...getSeeTags(ast.tags)],
     [
       // Then some TSdoc about the API status
       ...getDeprecatedTags(ast.tags),
+    ],
+    [
       ...serializeTag(ast.tags, "fontosdk", {
         // Leave only `@fontosdk importable` in place, drop all other suffixes
         transformLine: (line: string) =>
-          line.split(/\s+/).filter((tag) => tag === "importable").join(" "),
+          line
+            .split(/\s+/)
+            .filter((tag) => tag === "importable")
+            .join(" "),
       }),
-      ...getInternalTags(ast.tags),
+      ...serializeTag(ast.tags, "category", {
+        transformLine: (category: string) => {
+          if (fancyCategoryNames[category]) {
+            return fancyCategoryNames[category];
+          }
+          return null;
+        },
+      }),
     ],
     [
-      // Then the API shape itself
-      ...serializeTag(ast.tags, "category", {
-        transformLine: (category: string) =>
-          [
-              "family/cvk",
-              "fds/components",
-              "fds/system",
-              "widget",
-              "manager",
-            ].includes(category)
-            ? category
-            : null,
-      }),
-      ...getConstTags(ast.tags),
-      ...getDoctypeTags(ast.tags),
-      ...getExampleTags(ast.tags),
-      ...getHideconstructorTags(ast.tags),
+      ...getInternalTags(ast.tags),
       ...getVirtualTags(ast.tags),
       ...getThrowsTags(ast.tags),
-      ...getTypeTags(ast.tags),
-      ...getParamTags(ast.tags),
-      ...getReactTags(ast.tags),
-      ...getReturnsTags(ast.tags),
     ],
-  ].reduce((all, block) => {
-    const isEmpty = !block.some(Boolean);
-    if (isEmpty) {
-      return all;
-    }
-    if (all.length) {
-      // A newline separates blocks from one another
-      all.push("");
-    }
-    return all.concat(block);
-  }, []).map((line) => `${eol} * ${line}`.trimEnd());
+    [...getParamTags(ast.tags)],
+    [...getReturnsTags(ast.tags)],
+  ]
+    .reduce((all, block) => {
+      const isEmpty = !block.some(Boolean);
+      if (isEmpty) {
+        return all;
+      }
+      if (all.length) {
+        // A newline separates blocks from one another
+        all.push("");
+      }
+      return all.concat(block);
+    }, [])
+    .map((line) => `${eol} * ${line}`.trimEnd());
 
   // Avoid return empty doclets.
   if (!innerDoclet.length) {
@@ -96,35 +93,17 @@ export function replaceJsdocWithTsdoc(
   file?: string,
 ): string {
   const rawLines = fileContents.split("\n");
-  getJsdocAstsForFileContents(fileContents).reverse().forEach((ast) => {
-    const firstLine = ast.source[0];
-    const lastLine = ast.source[ast.source.length - 1];
-    rawLines.splice(
-      firstLine.number,
-      lastLine.number - firstLine.number + 1,
-      ...getTsdocStringForJsdocAst(ast).split("\n"),
-    );
-  });
-
-  const typeOcurrences = rawLines.reduce(
-    function (
-      ocurrences: number[],
-      line: string,
-      lineNumber: number,
-    ): number[] {
-      if (line.includes("@type")) {
-        ocurrences.push(lineNumber + 1);
-      }
-      return ocurrences;
-    },
-    [],
-  );
-
-  if (typeOcurrences.length) {
-    typeOcurrences.map((ocurrence) =>
-      console.warn(Colors.yellow("[WARN]"), "@type in", file + ":" + ocurrence)
-    );
-  }
+  getJsdocAstsForFileContents(fileContents)
+    .reverse()
+    .forEach((ast) => {
+      const firstLine = ast.source[0];
+      const lastLine = ast.source[ast.source.length - 1];
+      rawLines.splice(
+        firstLine.number,
+        lastLine.number - firstLine.number + 1,
+        ...getTsdocStringForJsdocAst(ast).split("\n"),
+      );
+    });
 
   return rawLines.join("\n");
 }

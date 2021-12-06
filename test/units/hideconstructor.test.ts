@@ -8,6 +8,5 @@ Deno.test("@hideconstructor", () =>
        * @hideconstructor
        */
     `,
-    tsdoc`
-    `,
+    tsdoc``,
   ));

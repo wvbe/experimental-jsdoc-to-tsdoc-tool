@@ -97,3 +97,23 @@ Deno.test("@param, default value is ignored", () =>
        */
     `,
   ));
+
+Deno.test("@param skeets, deze is voor Dijck", () =>
+  assertEquals(
+    jsdoc`
+      /**
+       * @param {object} category
+       * @param {string}  category.id                                      The identifier of the category.
+       * @param {string} category.label                                    The human readable label of the category.
+       * @param {string} [category.description]                            Optional further explanation of the category.
+       */
+    `,
+    tsdoc`
+      /**
+       * @param category             -
+       * @param category.id          - The identifier of the category.
+       * @param category.label       - The human readable label of the category.
+       * @param category.description - Optional further explanation of the category.
+       */
+    `,
+  ));

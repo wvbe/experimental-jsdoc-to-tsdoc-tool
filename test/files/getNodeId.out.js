@@ -31,6 +31,7 @@ function setNodeId(node) {
  * @fontosdk
  *
  * @param node - A node from which to get a nodeId
+ *
  * @returns The unique id for a node
  */
 export default function getNodeId(node) {
