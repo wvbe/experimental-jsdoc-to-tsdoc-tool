@@ -2,13 +2,13 @@
  * Running this script rebuilds it as a NodeJS compatible npm package.
  */
 
-import { build, BuildOptions, emptyDir } from "https://deno.land/x/dnt/mod.ts";
+import { build, BuildOptions, emptyDir } from "https://deno.land/x/dnt/mod.ts"
 
-const VERSION = Deno.args[0];
+const VERSION = Deno.args[0]
 if (!VERSION) {
-  throw new Error('Please specify a version, eg. "deno run dnt.ts 1.0.0');
+  throw new Error("Please specify a version, eg. \"deno run dnt.ts 1.0.0")
 }
-console.log(`Creating npm package for version ${VERSION}`);
+console.log(`Creating npm package for version ${ VERSION }`)
 
 const dependencyMapping: BuildOptions["mappings"] = {
   "https://esm.sh/comment-parser@1.3.0": {
@@ -24,7 +24,7 @@ const dependencyMapping: BuildOptions["mappings"] = {
     version: "2.5.0",
     subPath: "parser-markdown.js",
   },
-};
+}
 
 const packageJson: BuildOptions["package"] = {
   // package.json properties
@@ -36,6 +36,8 @@ const packageJson: BuildOptions["package"] = {
   bin: {
     "jsdoc-to-tsdoc": "./esm/bin.js",
   },
+  exports: ["./esm/src/index.js"],
+  types: "./types/src/index.d.ts",
   repository: {
     type: "git",
     url: "git+https://github.com/wvbe/experimental-jsdoc-to-tsdoc-tool.git",
@@ -43,12 +45,12 @@ const packageJson: BuildOptions["package"] = {
   bugs: {
     url: "https://github.com/wvbe/experimental-jsdoc-to-tsdoc-tool/issues",
   },
-};
+}
 
-await emptyDir("./npm");
+await emptyDir("./npm")
 
 await build({
-  entryPoints: ["./bin.ts"],
+  entryPoints: [ "./bin.ts", "./src/index.ts" ],
   outDir: "./npm",
   typeCheck: false,
   test: false,
@@ -61,8 +63,8 @@ await build({
 });
 
 // Prepend the line that lets your system know that bin.js should be executed using node;
-['./npm/esm/bin.js', './npm/script/bin.js'].forEach(script => {
-  Deno.writeTextFile(script, '#!/usr/bin/env node\n\n' + Deno.readTextFileSync(script));
+[ "./npm/esm/bin.js", "./npm/script/bin.js" ].forEach(script => {
+  Deno.writeTextFile(script, "#!/usr/bin/env node\n\n" + Deno.readTextFileSync(script))
 })
 
 // Use the npm-friendly README.md
