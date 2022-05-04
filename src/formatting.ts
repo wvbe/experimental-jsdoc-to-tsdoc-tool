@@ -1,4 +1,4 @@
-import { Spec } from "https://esm.sh/comment-parser@1.3.0";
+import type { Spec } from "https://esm.sh/comment-parser@1.3.0";
 import prettier from "https://esm.sh/prettier@2.5.0";
 import markdownParser from "https://esm.sh/prettier@2.5.0/parser-markdown";
 import { MAX_CHARACTER_WIDTH } from "./constants.ts";
